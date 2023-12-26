@@ -13,16 +13,23 @@ class _HomeState extends State<Home> {
     EntryBlock(title: "mwaa", subtitle: "lmao what?"),
     EntryBlock(title: "idk lmao", subtitle: "what else to write here?"),];
 
-  Widget? getEntryBlocks(context, index, List entryBlocks){
-    return entryBlocks[index];
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBar,
-      body: homeBody(entryBlocks)
+      /*body: Column(
+        children: [
+          Expanded(child: homeBody(entryBlocks)),
+        ],
+      )*/
+
+      body: homeBody(entryBlocks),
+            floatingActionButton: FloatingActionButton(onPressed: (){
+              
+            },
+            child: const Icon(Icons.add),),
+            
+      
     );
   }
 }
@@ -48,12 +55,14 @@ class _HomeState extends State<Home> {
   );
 
   Widget homeBody(List entryBlocks){
-    return ListView.builder(
-      itemCount: entryBlocks.length,
-      itemBuilder: (context, index){
-        return entryBlocks[index];
-      },
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      
+    return Container(
+      child: ListView.builder(
+        itemCount: entryBlocks.length,
+        itemBuilder: (context, index){
+          return entryBlocks[index];
+        },
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        
+      ),
     );
 }
