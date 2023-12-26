@@ -13,23 +13,63 @@ class _HomeState extends State<Home> {
     EntryBlock(title: "mwaa", subtitle: "lmao what?"),
     EntryBlock(title: "idk lmao", subtitle: "what else to write here?"),];
 
+  void addEntry(String title){
+    entryBlocks.add(EntryBlock(title: title, subtitle: "new subtitle"));
+  }
+
+  Future<void> _showInputDialog(BuildContext context) async {
+    String userInput = '';
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Enter Title'),
+          content: TextField(
+            onChanged: (value) {
+              userInput = value;
+            },
+            decoration: const InputDecoration(
+              hintText: 'Enter a title',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                print('User input: $userInput');
+                setState(() {
+                  entryBlocks.add(EntryBlock(title: userInput, subtitle: "new subtitle"));
+                });
+
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBar,
-      /*body: Column(
-        children: [
-          Expanded(child: homeBody(entryBlocks)),
-        ],
-      )*/
-
       body: homeBody(entryBlocks),
             floatingActionButton: FloatingActionButton(onPressed: (){
-              
+ 
+              setState(() async {
+                await _showInputDialog(context);
+              });
             },
-            child: const Icon(Icons.add),),
-            
-      
+            child: const Icon(Icons.add),),   
     );
   }
 }
