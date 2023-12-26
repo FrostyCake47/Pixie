@@ -53,6 +53,7 @@ class _HomeState extends State<Home> {
       itemBuilder: (context, index){
         return entryBlocks[index];
       },
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       
     );
 }

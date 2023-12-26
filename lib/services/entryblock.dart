@@ -9,8 +9,11 @@ class EntryBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10)
+      borderRadius: BorderRadius.circular(10),
+      color: Colors.grey[900],
       ),
       child: ListTile(
         title: Text(title),
@@ -20,6 +23,9 @@ class EntryBlock extends StatelessWidget {
         titleTextStyle: const TextStyle(
           fontSize: 20,
           color: Colors.white,
+        ),
+        subtitleTextStyle: const TextStyle(
+          color: Colors.grey,
         ),
       ),
     );
