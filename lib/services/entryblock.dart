@@ -6,7 +6,10 @@ class EntryBlock extends StatelessWidget {
   final String subtitle;
   late final String date;
   late final String time;
+<<<<<<< HEAD
   late final String day;
+=======
+>>>>>>> 274c9c2836d556589aa34b14fbfa140b3189d690
 
   EntryBlock({Key? key, required this.title, required this.subtitle}): super(key: key){
     DateTime now = DateTime.now();
@@ -38,7 +41,10 @@ class EntryBlock extends StatelessWidget {
             'subtitle': subtitle, 
             'date': date, 
             'time': time,
+<<<<<<< HEAD
             'day' : day,
+=======
+>>>>>>> 274c9c2836d556589aa34b14fbfa140b3189d690
           });
         },
         
