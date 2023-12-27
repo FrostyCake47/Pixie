@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 class EntryBlock extends StatelessWidget {
   final String title;
   final String subtitle;
-  late String date;
-  late String time;
+  late final String date;
+  late final String time;
 
   EntryBlock({Key? key, required this.title, required this.subtitle}): super(key: key){
     DateTime now = DateTime.now();
@@ -22,11 +22,21 @@ class EntryBlock extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       color: Colors.grey[900],
       ),
+
       child: ListTile(
         title: Text(title),
         subtitle: Text(subtitle),
         trailing: Text(date),
         tileColor: Colors.grey[400],
+
+        onTap: () async {
+          await Navigator.pushNamed(context, '/entry', arguments: {
+            'title': title, 
+            'subtitle': subtitle, 
+            'date': date, 
+            'time': time,
+          });
+        },
         
         titleTextStyle: const TextStyle(
           fontSize: 20,

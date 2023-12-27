@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:diary/pages/home.dart';
 import 'package:diary/pages/loading.dart';
+import 'package:diary/pages/entry.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -8,6 +9,7 @@ void main() {
       routes: {
         "/" : (context) => Loading(),
         "/home" : (context) => Home(),
+        "/entry" : (context) => Entry(),
       },
 
       debugShowCheckedModeBanner: false,

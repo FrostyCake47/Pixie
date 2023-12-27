@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:diary/services/entryblock.dart';
-import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
