@@ -27,10 +27,9 @@ class _EntryState extends State<Entry> {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       decoration: BoxDecoration(
       ),
-      child:  Column(
-        //mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+      child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
           EntryDateTime(data: data,),
           EntryTitle(data: data,)
         ],
