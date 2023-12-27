@@ -14,23 +14,38 @@ class _EntryState extends State<Entry> {
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context)?.settings.arguments as Map?;
-    //print("inside entry: ${instance.title ?? 'title' }");
-    //print(instance?.date);
+    //String filename = data?['date']+data?['time'];
+    //print(filename); 
 
-    //title = ModalRoute.of(context)!.settings.arguments as String?;
-    String title = data?['title'] ?? "null";
-    print(title);
+    AppBar entryAppbar = AppBar(
+      iconTheme: const IconThemeData(
+        color: Colors.white
+      ),
+    );
+
+    Widget entryBody = Container(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      decoration: BoxDecoration(
+      ),
+      child:  Column(
+        //mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          EntryDateTime(data: data,),
+          EntryTitle(data: data,)
+        ],
+      ),
+    );
 
     return Scaffold(
-      appBar: AppBar(
-
-      ),
-      body: Center(
-        child: Text(data?['title'],
-        style: TextStyle(
-          color: Colors.white
-        ),
-      ),),
+      appBar: entryAppbar,
+      body: entryBody
     );
   }
+
+  
+
+  
+
 }
+
