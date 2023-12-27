@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EntryBlock extends StatelessWidget {
-  String title;
-  String subtitle;
+  final String title;
+  final String subtitle;
+  late String date;
+  late String time;
 
-  EntryBlock({super.key, required this.title, required this.subtitle});
+  EntryBlock({Key? key, required this.title, required this.subtitle}): super(key: key){
+    DateTime now = DateTime.now();
+    date = DateFormat('d MMM').format(now);
+    time = DateFormat.jm().format(now).toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +25,7 @@ class EntryBlock extends StatelessWidget {
       child: ListTile(
         title: Text(title),
         subtitle: Text(subtitle),
+        trailing: Text(date),
         tileColor: Colors.grey[400],
         
         titleTextStyle: const TextStyle(
@@ -25,6 +33,9 @@ class EntryBlock extends StatelessWidget {
           color: Colors.white,
         ),
         subtitleTextStyle: const TextStyle(
+          color: Colors.grey,
+        ),
+        leadingAndTrailingTextStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),

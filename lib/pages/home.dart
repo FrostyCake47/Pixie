@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:diary/services/entryblock.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,12 +14,9 @@ class _HomeState extends State<Home> {
     EntryBlock(title: "mwaa", subtitle: "lmao what?"),
     EntryBlock(title: "idk lmao", subtitle: "what else to write here?"),];
 
-  void addEntry(String title){
-    entryBlocks.add(EntryBlock(title: title, subtitle: "new subtitle"));
-  }
-
   Future<void> _showInputDialog(BuildContext context) async {
-    String userInput = '';
+    String newTitle = '';
+    String newSubTitle = '';
 
     return showDialog<void>(
       context: context,
@@ -27,7 +25,7 @@ class _HomeState extends State<Home> {
           title: const Text('Enter Title'),
           content: TextField(
             onChanged: (value) {
-              userInput = value;
+              newTitle = value;
             },
             decoration: const InputDecoration(
               hintText: 'Enter a title',
@@ -41,12 +39,11 @@ class _HomeState extends State<Home> {
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () async {
-                print('User input: $userInput');
+              onPressed: (){
+                print('User input: $newTitle');
                 setState(() {
-                  entryBlocks.add(EntryBlock(title: userInput, subtitle: "new subtitle"));
+                  entryBlocks.add(EntryBlock(title: newTitle, subtitle: newSubTitle));
                 });
-
                 Navigator.of(context).pop();
               },
               child: const Text('OK'),
@@ -57,16 +54,14 @@ class _HomeState extends State<Home> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBar,
       body: homeBody(entryBlocks),
             floatingActionButton: FloatingActionButton(onPressed: (){
- 
-              setState(() async {
-                await _showInputDialog(context);
+              setState(() {
+                _showInputDialog(context);
               });
             },
             child: const Icon(Icons.add),),   
