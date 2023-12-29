@@ -22,7 +22,7 @@ class DatabaseHelper {
       version: 1,
       onCreate: (db, version) async {
         await db.execute(
-          'CREATE TABLE entries(id TEXT PRIMARY KEY, content TEXT)',
+          'CREATE TABLE entries(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, subtitle TEXT, content TEXT, date TEXT, time TEXT, day TEXT)',
         );
       },
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:diary/services/entryblock.dart';
-import 'package:diary/services/database.dart';
+//import 'package:diary/services/database.txt';
 
 class Entry extends StatefulWidget {
   const Entry({super.key});
@@ -32,6 +32,7 @@ class _EntryState extends State<Entry> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
           EntryDateTime(data: data,),
+          const SizedBox(height: 5,),
           EntryTitle(data: data,)
         ],
       ),

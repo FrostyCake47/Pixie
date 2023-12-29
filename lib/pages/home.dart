@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:diary/services/entryblock.dart';
+import 'package:hive/hive.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -9,9 +10,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List entryBlocks = [
-    EntryBlock(title: "mwaa", subtitle: "lmao what?"),
-    EntryBlock(title: "idk lmao", subtitle: "what else to write here?"),];
+  /*List entryBlocks = [
+    EntryBlock(title: "mwaa", subtitle: "lmao what?", id: 1,),
+    EntryBlock(title: "idk lmao", subtitle: "what else to write here?", id: 2,),];
+  */
+
+  late Box<EntryBlock> _entryDetails;
+  late List<EntryBlock> entryBlocks;
+
+  _HomeState() {
+    _initializeHive();
+  }
+  
+
+  Future<void> _initializeHive() async {
+    _entryDetails = Hive.box<EntryBlock>('entrydetails');
+
+    Iterable<EntryBlock> allEntries = _entryDetails.values;
+    entryBlocks = allEntries.toList();
+  }
+
 
   Future<void> _showInputDialog(BuildContext context) async {
     String newTitle = '';
@@ -41,7 +59,9 @@ class _HomeState extends State<Home> {
               onPressed: (){
                 print('User input: $newTitle');
                 setState(() {
-                  entryBlocks.add(EntryBlock(title: newTitle, subtitle: newSubTitle));
+                  EntryBlock instance = EntryBlock(title: newTitle, subtitle: newSubTitle, id: 1,);
+                  entryBlocks.add(instance);
+                  //_entryDetails.put(1, instance);
                 });
                 Navigator.of(context).pop();
               },

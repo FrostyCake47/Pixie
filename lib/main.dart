@@ -2,8 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:diary/pages/home.dart';
 import 'package:diary/pages/loading.dart';
 import 'package:diary/pages/entry.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:diary/services/entryblock.dart';
 
-void main() {
+
+Future<void> main() async{
+  await Hive.initFlutter();
+
+  // Get the application documents directory
+  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDir.path);
+
+  // Open boxes
+  var entryDetails = await Hive.openBox<EntryBlock>('entrydetails');
+  //var entryContents = await Hive.openBox<EntryBlock>('entrycontents');
+
+
   runApp(MaterialApp(
       initialRoute: "/home",
       routes: {

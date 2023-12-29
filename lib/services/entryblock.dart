@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EntryBlock extends StatelessWidget {
+  final int id;
   final String title;
   final String subtitle;
   late final String date;
   late final String time;
   late final String day;
 
-  EntryBlock({Key? key, required this.title, required this.subtitle}): super(key: key){
+  EntryBlock({Key? key, required this.title, required this.subtitle, required this.id}): super(key: key){
     DateTime now = DateTime.now();
     date = DateFormat('d MMM').format(now);
     time = DateFormat.jm().format(now).toString();
@@ -97,5 +98,23 @@ class _EntryDateTimeState extends State<EntryDateTime> {
         color: Colors.grey
       ),
     );
+  }
+}
+
+
+class WrittenContent extends StatefulWidget {
+  final Map? data;
+
+  const WrittenContent({Key? key, this.data}) : super(key: key);
+
+  @override
+  State<WrittenContent> createState() => _WrittenContentState();
+}
+
+class _WrittenContentState extends State<WrittenContent> {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Text(widget.data?['content']));
   }
 }
