@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:diary/services/entryblock.dart';
+import 'package:diary/services/database.dart';
 
 class Entry extends StatefulWidget {
   const Entry({super.key});
