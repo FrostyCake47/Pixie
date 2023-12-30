@@ -15,25 +15,28 @@ class _HomeState extends State<Home> {
     EntryBlock(title: "idk lmao", subtitle: "what else to write here?", id: 2,),];
   */
 
-  late Box<EntryBlock> _entryDetails;
-  late List<EntryBlock> entryBlocks;
+  late Box<EntryBlockDetails> _entryDetails;
+  late List<EntryBlockDetails> entryBlocks;
 
   _HomeState() {
+    print("initialzing hive");
     _initializeHive();
   }
   
 
   Future<void> _initializeHive() async {
-    _entryDetails = Hive.box<EntryBlock>('entrydetails');
+    _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
 
-    Iterable<EntryBlock> allEntries = _entryDetails.values;
+    Iterable<EntryBlockDetails> allEntries = _entryDetails.values;
     entryBlocks = allEntries.toList();
+    print("entryBlocks initalized");
   }
 
 
   Future<void> _showInputDialog(BuildContext context) async {
     String newTitle = '';
     String newSubTitle = '';
+    String content = '';
 
     return showDialog<void>(
       context: context,
@@ -60,10 +63,13 @@ class _HomeState extends State<Home> {
                 print('User input: $newTitle');
                 setState(() {
                   //EntryBlock instance = EntryBlock(title: newTitle, subtitle: newSubTitle, id: 1,);
+                  print("going to create instance");
                   EntryBlockDetails instance = EntryBlockDetails(id: 1, title: newTitle, subtitle: newSubTitle);
+                  print("going to create instanceblock");
                   EntryBlock instanceblock = EntryBlock(instance: instance);
-                  entryBlocks.add(instanceblock);
-                  //_entryDetails.put(1, instance);
+                  
+                  entryBlocks.add(instance);
+                  _entryDetails.put(1, instance);
                 });
                 Navigator.of(context).pop();
               },
@@ -111,11 +117,17 @@ class _HomeState extends State<Home> {
   );
 
   Widget homeBody(List entryBlocks){
+    print("currently in homebody");
+    print(entryBlocks[0]);
+    print(entryBlocks[0].title);
+    print(entryBlocks[0].date);
     return Container(
       child: ListView.builder(
         itemCount: entryBlocks.length,
         itemBuilder: (context, index){
-          return entryBlocks[index];
+          print("currently in itembuilder");
+          return EntryBlock(instance: entryBlocks[index]);  
+
         },
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         

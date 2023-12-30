@@ -10,13 +10,15 @@ import 'package:diary/services/entryblock.dart';
 
 Future<void> main() async{
   await Hive.initFlutter();
+  Hive.registerAdapter(EntryBlockDetailsAdapter());
 
   // Get the application documents directory
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
 
   // Open boxes
-  var entryDetails = await Hive.openBox<EntryBlock>('entrydetails');
+  print("setting entryDetails in main.dart");
+  var entryDetails = await Hive.openBox<EntryBlockDetails>('entrydetails');
   //var entryContents = await Hive.openBox<EntryBlock>('entrycontents');
 
 

@@ -2,28 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:hive/hive.dart';
 
-//part 'entryblock.g.dart';
+part 'entryblock.g.dart';
 
+
+@HiveType(typeId: 1)
 class EntryBlockDetails{
+  @HiveField(0)
   late final int id;
+
+  @HiveField(1)
   late final String title;
+
+  @HiveField(2)
   late final String subtitle;
+
+  @HiveField(3)
   late final String date;
+
+  @HiveField(4)
   late final String time;
+
+  @HiveField(5)
   late final String day;
 
-  EntryBlockDetails({Key? key, required this.id, required this.title, required this.subtitle,});
+  @HiveField(6)
+  late final String content;
+
+  EntryBlockDetails({Key? key, required this.id, required this.title, required this.subtitle});
 }
 
 class EntryBlock extends StatelessWidget {
   final EntryBlockDetails? instance;
 
-  EntryBlock({Key? key, required this.instance}): super(key: key){
+  void createTime(){
+    print("called creatTime()");
     DateTime now = DateTime.now();
     instance?.date = DateFormat('d MMM').format(now);
     instance?.time = DateFormat.jm().format(now).toString();
     instance?.day = DateFormat.E('en_US').format(now);
+    instance?.content = "";
     print(instance?.day);
+  }
+
+  EntryBlock({Key? key, required this.instance}): super(key: key){
+    print(instance?.title);
+    print("EntryBlock constructor");
+
+    try {
+      print(instance?.date);
+    } 
+    catch (e) {
+      print("called creatTime()");
+      createTime();
+    }
   }
 
   @override
