@@ -18,16 +18,33 @@ class _HomeState extends State<Home> {
   late Box<EntryBlockDetails> _entryDetails;
   late List<EntryBlockDetails> entryBlocks;
 
+  late Box<int> _idTracker;
+  late int currentID;
+
   _HomeState() {
     print("initialzing hive");
     _initializeHive();
+    _initializeIdTracker();
   }
   
+
+  Future<void> _initializeIdTracker() async {
+    _idTracker = Hive.box<int>('idtracker');
+    if(_idTracker.get(0) == null){
+      await _idTracker.put(0, 0);
+      currentID = 0;
+    }
+    else{
+      currentID = _idTracker.get(0) as int;
+    } 
+  }
 
   Future<void> _initializeHive() async {
     _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
 
     Iterable<EntryBlockDetails> allEntries = _entryDetails.values;
+    
+    
     entryBlocks = allEntries.toList();
     print("entryBlocks initalized");
   }
@@ -62,14 +79,17 @@ class _HomeState extends State<Home> {
               onPressed: (){
                 print('User input: $newTitle');
                 setState(() {
+                  currentID += 1;
                   //EntryBlock instance = EntryBlock(title: newTitle, subtitle: newSubTitle, id: 1,);
                   print("going to create instance");
-                  EntryBlockDetails instance = EntryBlockDetails(id: 1, title: newTitle, subtitle: newSubTitle);
+                  EntryBlockDetails instance = EntryBlockDetails(id: currentID, title: newTitle, subtitle: currentID.toString());
                   print("going to create instanceblock");
                   EntryBlock instanceblock = EntryBlock(instance: instance);
                   
                   entryBlocks.add(instance);
-                  _entryDetails.put(1, instance);
+
+                  _entryDetails.put(currentID, instance);
+                  _idTracker.put(0, currentID);
                 });
                 Navigator.of(context).pop();
               },

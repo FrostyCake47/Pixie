@@ -19,6 +19,7 @@ Future<void> main() async{
   // Open boxes
   print("setting entryDetails in main.dart");
   var entryDetails = await Hive.openBox<EntryBlockDetails>('entrydetails');
+  var idTracker = await Hive.openBox<int>("idtracker");
   //var entryContents = await Hive.openBox<EntryBlock>('entrycontents');
 
 
