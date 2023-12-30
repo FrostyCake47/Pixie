@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:hive/hive.dart';
 
-//part 'entryblock.g.dart';
-
-class EntryBlockDetails{
-  late final int id;
-  late final String title;
-  late final String subtitle;
+class EntryBlock extends StatelessWidget {
+  final int id;
+  final String title;
+  final String subtitle;
   late final String date;
   late final String time;
   late final String day;
 
-  EntryBlockDetails({Key? key, required this.id, required this.title, required this.subtitle,});
-}
-
-class EntryBlock extends StatelessWidget {
-  final EntryBlockDetails? instance;
-
-  EntryBlock({Key? key, required this.instance}): super(key: key){
+  EntryBlock({Key? key, required this.title, required this.subtitle, required this.id}): super(key: key){
     DateTime now = DateTime.now();
-    instance?.date = DateFormat('d MMM').format(now);
-    instance?.time = DateFormat.jm().format(now).toString();
-    instance?.day = DateFormat.E('en_US').format(now);
-    print(instance?.day);
+    date = DateFormat('d MMM').format(now);
+    time = DateFormat.jm().format(now).toString();
+    day = DateFormat.E('en_US').format(now);
+    print(day);
   }
 
   @override
@@ -37,18 +28,18 @@ class EntryBlock extends StatelessWidget {
       ),
 
       child: ListTile(
-        title: Text(instance?.title ?? "title"),
-        subtitle: Text(instance?.subtitle ?? "subtitle"),
-        trailing: Text(instance?.date ?? "date"),
+        title: Text(title),
+        subtitle: Text(subtitle),
+        trailing: Text(date),
         tileColor: Colors.grey[400],
 
         onTap: () async {
           await Navigator.pushNamed(context, '/entry', arguments: {
-            'title': instance?.title ?? "title", 
-            'subtitle': instance?.subtitle ?? "subtitle", 
-            'date': instance?.date ?? "date", 
-            'time': instance?.time ?? "time",
-            'day' : instance?.day ?? "day",
+            'title': title, 
+            'subtitle': subtitle, 
+            'date': date, 
+            'time': time,
+            'day' : day,
           });
         },
         
@@ -66,7 +57,6 @@ class EntryBlock extends StatelessWidget {
     );
   }
 }
-
 
 class EntryTitle extends StatefulWidget {
   final Map? data;

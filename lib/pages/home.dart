@@ -59,8 +59,10 @@ class _HomeState extends State<Home> {
               onPressed: (){
                 print('User input: $newTitle');
                 setState(() {
-                  EntryBlock instance = EntryBlock(title: newTitle, subtitle: newSubTitle, id: 1,);
-                  entryBlocks.add(instance);
+                  //EntryBlock instance = EntryBlock(title: newTitle, subtitle: newSubTitle, id: 1,);
+                  EntryBlockDetails instance = EntryBlockDetails(id: 1, title: newTitle, subtitle: newSubTitle);
+                  EntryBlock instanceblock = EntryBlock(instance: instance);
+                  entryBlocks.add(instanceblock);
                   //_entryDetails.put(1, instance);
                 });
                 Navigator.of(context).pop();
