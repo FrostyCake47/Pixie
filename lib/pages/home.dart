@@ -20,6 +20,7 @@ class _HomeState extends State<Home> {
 
   late Box<int> _idTracker;
   late int currentID;
+  int numba = 69;
 
   _HomeState() {
     print("initialzing hive");
@@ -36,18 +37,19 @@ class _HomeState extends State<Home> {
     }
     else{
       currentID = _idTracker.get(0) as int;
-    } 
+    }
+    //_idTracker.clear();
+
   }
 
   Future<void> _initializeHive() async {
     _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
-
     Iterable<EntryBlockDetails> allEntries = _entryDetails.values;
-    
-    
     entryBlocks = allEntries.toList();
+    //_entryDetails.clear();
     print("entryBlocks initalized");
   }
+
 
 
   Future<void> _showInputDialog(BuildContext context) async {
@@ -104,8 +106,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: homeAppBar,
-      body: homeBody(entryBlocks),
+      appBar: HomeAppBar(),
+      body: HomeBody(entryBlocks: entryBlocks,),
             floatingActionButton: FloatingActionButton(onPressed: (){
               setState(() {
                 _showInputDialog(context);
@@ -116,41 +118,69 @@ class _HomeState extends State<Home> {
   }
 }
 
-  AppBar homeAppBar = AppBar(
-    automaticallyImplyLeading: false,
-    iconTheme: const IconThemeData(color: Colors.white),
-    titleTextStyle: const TextStyle(color: Colors.white),
-    title: const Center(
-      child: Row(
-        children: <Widget>[
-          Icon(Icons.book,),
-          SizedBox(width: 10,),
-          Expanded(child: Text("My Diary")),
-          Icon(Icons.search),
-          SizedBox(width: 10,),
-          CircleAvatar(radius: 10, child: Image(
-            image: AssetImage('assets/PaperPlanes1.jpg')),
-            )
-        ],
-      ),
-    ),
-  );
 
-  Widget homeBody(List entryBlocks){
-    print("currently in homebody");
-    print(entryBlocks[0]);
-    print(entryBlocks[0].title);
-    print(entryBlocks[0].date);
-    return Container(
-      child: ListView.builder(
-        itemCount: entryBlocks.length,
-        itemBuilder: (context, index){
-          print("currently in itembuilder");
-          return EntryBlock(instance: entryBlocks[index]);  
+class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
+  const HomeAppBar({super.key});
 
-        },
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      iconTheme: const IconThemeData(color: Colors.white),
+      titleTextStyle: const TextStyle(color: Colors.white),
+      title: const Center(
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.book,),
+            SizedBox(width: 10,),
+            Expanded(child: Text("My Diary")),
+            Icon(Icons.search),
+            SizedBox(width: 10,),
+            CircleAvatar(radius: 10, child: Image(
+              image: AssetImage('assets/PaperPlanes1.jpg')),
+              )
+          ],
+        ),
       ),
     );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class HomeBody extends StatefulWidget {
+  final List entryBlocks;
+  const HomeBody({Key? key, required this.entryBlocks}) : super(key: key);
+
+  @override
+  State<HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
+  @override
+  Widget build(BuildContext context) {
+    try{
+      return Container(
+        child: ListView.builder(
+          itemCount: widget.entryBlocks.length,
+          itemBuilder: (context, index){
+            print("currently in itembuilder");
+            return EntryBlock(instance: widget.entryBlocks[index]);  
+          },
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),  
+        ),
+      );
+    }
+    catch (e) {
+      if (e is RangeError) {
+        print('Caught a RangeError(Empty app): $e');
+      } 
+      else {
+        print('An error occurred: $e');
+      }
+
+      return Container();
+    };
+  }
 }

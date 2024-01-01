@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:hive/hive.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 part 'entryblock.g.dart';
 
@@ -44,6 +45,7 @@ class EntryBlock extends StatelessWidget {
     print(instance?.day);
   }
 
+
   EntryBlock({Key? key, required this.instance}): super(key: key){
     print(instance?.title);
     print("EntryBlock constructor");
@@ -61,18 +63,19 @@ class EntryBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       color: Colors.grey[900],
       ),
 
+      
       child: ListTile(
         title: Text(instance?.title ?? "title"),
         subtitle: Text(instance?.subtitle ?? "subtitle"),
         trailing: Text(instance?.date ?? "date"),
-        tileColor: Colors.grey[400],
-
+        tileColor: Colors.grey[900],
+      
         onTap: () async {
           await Navigator.pushNamed(context, '/entry', arguments: {
             'title': instance?.title ?? "title", 
@@ -80,6 +83,8 @@ class EntryBlock extends StatelessWidget {
             'date': instance?.date ?? "date", 
             'time': instance?.time ?? "time",
             'day' : instance?.day ?? "day",
+            'id' : instance?.id ?? "id",
+            'content' : instance?.content ?? "content",
           });
         },
         
@@ -111,7 +116,7 @@ class _EntryTitleState extends State<EntryTitle> {
   
   @override
   Widget build(BuildContext context) {
-    return Text(widget.data?['title'],
+    return Text("${widget.data!['id']} " + widget.data?['title'],
       style: const TextStyle(
         fontSize: 30,
         color: Colors.white
