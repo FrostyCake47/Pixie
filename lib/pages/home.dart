@@ -86,7 +86,7 @@ class _HomeState extends State<Home> {
                   print("going to create instance");
                   EntryBlockDetails instance = EntryBlockDetails(id: currentID, title: newTitle, subtitle: currentID.toString());
                   print("going to create instanceblock");
-                  EntryBlock instanceblock = EntryBlock(instance: instance);
+                  EntryBlock instanceblock = EntryBlock(parentContext: context, instance: instance);
                   
                   entryBlocks.add(instance);
 
@@ -166,7 +166,7 @@ class _HomeBodyState extends State<HomeBody> {
           itemCount: widget.entryBlocks.length,
           itemBuilder: (context, index){
             print("currently in itembuilder");
-            return EntryBlock(instance: widget.entryBlocks[index]);  
+            return EntryBlock(parentContext: context, instance: widget.entryBlocks[index]);  
           },
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),  
         ),

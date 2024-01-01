@@ -34,6 +34,7 @@ class EntryBlockDetails{
 
 class EntryBlock extends StatelessWidget {
   final EntryBlockDetails? instance;
+  final BuildContext parentContext;
 
   void createTime(){
     print("called createTime()");
@@ -46,7 +47,7 @@ class EntryBlock extends StatelessWidget {
   }
 
 
-  EntryBlock({Key? key, required this.instance}): super(key: key){
+  EntryBlock({Key? key, required this.instance, required this.parentContext}): super(key: key){
     print(instance?.title);
     print("EntryBlock constructor");
 
@@ -68,40 +69,51 @@ class EntryBlock extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       color: Colors.grey[900],
       ),
-
       
-      child: ListTile(
-        title: Text(instance?.title ?? "title"),
-        subtitle: Text(instance?.subtitle ?? "subtitle"),
-        trailing: Column(
+      child: Slidable(
+        endActionPane: ActionPane(
+          motion: const StretchMotion(), 
           children: [
-            Text(instance?.date ?? "date"),
-            Expanded(child: IconButton(icon: Icon(Icons.delete), color: Colors.white, onPressed: (){},))
-          ],
-        ),
-        tileColor: Colors.grey[900],
-      
-        onTap: () async {
-          await Navigator.pushNamed(context, '/entry', arguments: {
-            'title': instance?.title ?? "title", 
-            'subtitle': instance?.subtitle ?? "subtitle", 
-            'date': instance?.date ?? "date", 
-            'time': instance?.time ?? "time",
-            'day' : instance?.day ?? "day",
-            'id' : instance?.id ?? "id",
-            'content' : instance?.content ?? "content",
-          });
-        },
+            SlidableAction(onPressed: (parentContext){
+
+            }, 
+            
+            icon: Icons.delete_forever,)]),
+
+        child: ListTile(
+          title: Text(instance?.title ?? "title"),
+          subtitle: Text(instance?.subtitle ?? "subtitle"),
+          trailing: Column(
+            children: [
+              Text(instance?.date ?? "date"),
+              Expanded(child: IconButton(icon: Icon(Icons.delete), color: Colors.white, onPressed: (){},))
+            ],
+          ),
+          
+          tileColor: Colors.grey[900],
         
-        titleTextStyle: const TextStyle(
-          fontSize: 20,
-          color: Colors.white,
-        ),
-        subtitleTextStyle: const TextStyle(
-          color: Colors.grey,
-        ),
-        leadingAndTrailingTextStyle: const TextStyle(
-          color: Colors.grey,
+          onTap: () async {
+            await Navigator.pushNamed(context, '/entry', arguments: {
+              'title': instance?.title ?? "title", 
+              'subtitle': instance?.subtitle ?? "subtitle", 
+              'date': instance?.date ?? "date", 
+              'time': instance?.time ?? "time",
+              'day' : instance?.day ?? "day",
+              'id' : instance?.id ?? "id",
+              'content' : instance?.content ?? "content",
+            });
+          },
+          
+          titleTextStyle: const TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
+          subtitleTextStyle: const TextStyle(
+            color: Colors.grey,
+          ),
+          leadingAndTrailingTextStyle: const TextStyle(
+            color: Colors.grey,
+          ),
         ),
       ),
     );
