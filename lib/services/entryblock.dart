@@ -35,6 +35,7 @@ class EntryBlockDetails{
 class EntryBlock extends StatelessWidget {
   final EntryBlockDetails? instance;
   final BuildContext parentContext;
+  final void Function(int) deleteItemCallback;
 
   void createTime(){
     print("called createTime()");
@@ -47,7 +48,7 @@ class EntryBlock extends StatelessWidget {
   }
 
 
-  EntryBlock({Key? key, required this.instance, required this.parentContext}): super(key: key){
+  EntryBlock({Key? key, required this.instance, required this.parentContext, required this.deleteItemCallback}): super(key: key){
     print(instance?.title);
     print("EntryBlock constructor");
 
@@ -72,10 +73,11 @@ class EntryBlock extends StatelessWidget {
       
       child: Slidable(
         endActionPane: ActionPane(
-          motion: const StretchMotion(), 
+          motion: const StretchMotion(),
+          extentRatio: 0.2,
           children: [
             SlidableAction(onPressed: (parentContext){
-
+              deleteItemCallback(instance?.id ?? -1);
             }, 
             
             icon: Icons.delete_forever,)]),
@@ -86,7 +88,6 @@ class EntryBlock extends StatelessWidget {
           trailing: Column(
             children: [
               Text(instance?.date ?? "date"),
-              Expanded(child: IconButton(icon: Icon(Icons.delete), color: Colors.white, onPressed: (){},))
             ],
           ),
           

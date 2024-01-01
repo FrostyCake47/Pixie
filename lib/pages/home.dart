@@ -50,7 +50,11 @@ class _HomeState extends State<Home> {
     print("entryBlocks initalized");
   }
 
-
+  void deleteItem(int index) {
+    setState(() {
+      entryBlocks.removeAt(index-1);
+    });
+  }
 
   Future<void> _showInputDialog(BuildContext context) async {
     String newTitle = '';
@@ -86,7 +90,7 @@ class _HomeState extends State<Home> {
                   print("going to create instance");
                   EntryBlockDetails instance = EntryBlockDetails(id: currentID, title: newTitle, subtitle: currentID.toString());
                   print("going to create instanceblock");
-                  EntryBlock instanceblock = EntryBlock(parentContext: context, instance: instance);
+                  EntryBlock instanceblock = EntryBlock(parentContext: context, instance: instance, deleteItemCallback: deleteItem);
                   
                   entryBlocks.add(instance);
 
@@ -107,7 +111,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(),
-      body: HomeBody(entryBlocks: entryBlocks,),
+      body: HomeBody(entryBlocks: entryBlocks, deleteItem: deleteItem,),
             floatingActionButton: FloatingActionButton(onPressed: (){
               setState(() {
                 _showInputDialog(context);
@@ -151,7 +155,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
 
 class HomeBody extends StatefulWidget {
   final List entryBlocks;
-  const HomeBody({Key? key, required this.entryBlocks}) : super(key: key);
+  final void Function(int) deleteItem;
+
+  const HomeBody({Key? key, required this.entryBlocks, required this.deleteItem}) : super(key: key);
 
   @override
   State<HomeBody> createState() => _HomeBodyState();
@@ -166,7 +172,7 @@ class _HomeBodyState extends State<HomeBody> {
           itemCount: widget.entryBlocks.length,
           itemBuilder: (context, index){
             print("currently in itembuilder");
-            return EntryBlock(parentContext: context, instance: widget.entryBlocks[index]);  
+            return EntryBlock(parentContext: context, instance: widget.entryBlocks[index], deleteItemCallback: widget.deleteItem);  
           },
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),  
         ),
