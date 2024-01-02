@@ -50,9 +50,10 @@ class _HomeState extends State<Home> {
     print("entryBlocks initalized");
   }
 
-  void deleteItem(int index) {
+  void deleteItem(int id) {
     setState(() {
-      entryBlocks.removeAt(index-1);
+      id == -1 ? print("invalid id") : _entryDetails.delete(id);
+      _initializeHive();
     });
   }
 
