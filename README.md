@@ -1,3 +1,4 @@
 # diary
 
-A new Flutter project.
+My first Flutter project. 
+Hive used for database
