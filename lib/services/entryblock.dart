@@ -18,18 +18,18 @@ class EntryBlockDetails{
   late final String subtitle;
 
   @HiveField(3)
-  late final String date;
+  late String date;
 
   @HiveField(4)
-  late final String time;
+  late String time;
 
   @HiveField(5)
-  late final String day;
+  late String day;
 
   @HiveField(6)
-  late final String content;
+  late String content;
 
-  EntryBlockDetails({Key? key, required this.id, required this.title, required this.subtitle});
+  EntryBlockDetails({Key? key, required this.id, required this.title, required this.subtitle, this.date = "", this.day = "", this.time = "", this.content = "lets see"});
 }
 
 class EntryBlock extends StatelessWidget {
@@ -43,7 +43,6 @@ class EntryBlock extends StatelessWidget {
     instance?.date = DateFormat('d MMM').format(now);
     instance?.time = DateFormat.jm().format(now).toString();
     instance?.day = DateFormat.E('en_US').format(now);
-    instance?.content = "";
     print(instance?.day);
   }
 
@@ -53,11 +52,12 @@ class EntryBlock extends StatelessWidget {
     print("EntryBlock constructor");
 
     try {
+      if(instance?.date == "") createTime();
       print(instance?.date);
     } 
     catch (e) {
       print("called creatTime()");
-      createTime();
+      if(instance?.date == "") createTime();
     }
   }
 
@@ -101,7 +101,7 @@ class EntryBlock extends StatelessWidget {
               'time': instance?.time ?? "time",
               'day' : instance?.day ?? "day",
               'id' : instance?.id ?? "id",
-              'content' : instance?.content ?? "content",
+              'content' : instance?.content ?? "content", //lets see
             });
           },
           

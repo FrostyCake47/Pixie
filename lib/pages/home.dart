@@ -96,7 +96,6 @@ class _HomeState extends State<Home> {
                   EntryBlock instanceblock = EntryBlock(parentContext: context, instance: instance, deleteItemCallback: deleteItem);
                   
                   entryBlocks.add(instance);
-
                   _entryDetails.put(currentID, instance);
                   _idTracker.put(0, currentID);
                 });

@@ -14,7 +14,7 @@ class Entry extends StatefulWidget {
 
 class _EntryState extends State<Entry> {
   Map? data = {};
-  //EntryBlockDetails? instance;
+  EntryBlockDetails? instance;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class EntryBody extends StatelessWidget {
           const SizedBox(height: 10),
           EntryTitle(data: data,),
           const SizedBox(height: 10),
-          WrittenContent(initialContent: "lets see"),
+          WrittenContent(data:data),
         ],
       ),
     );

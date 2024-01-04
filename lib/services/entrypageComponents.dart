@@ -1,4 +1,6 @@
+import 'package:diary/services/entryblock.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 
 
@@ -57,9 +59,11 @@ class _EntryTitleState extends State<EntryTitle> {
 
 
 class WrittenContent extends StatefulWidget {
+  Map? data;
   String initialContent;
 
-  WrittenContent({Key? key, required this.initialContent}) : super(key: key);
+
+  WrittenContent({Key? key, this.initialContent = "lets see", required this.data}) : super(key: key);
 
   @override
   State<WrittenContent> createState() => _WrittenContentState();
@@ -68,11 +72,24 @@ class WrittenContent extends StatefulWidget {
 class _WrittenContentState extends State<WrittenContent> {
   late TextEditingController _textEditingController;
   bool _isEditing = false;
+  late Box<EntryBlockDetails> _entryDetails;
+  late EntryBlockDetails instance;
+
+  Future<void> _initializeHive() async {
+    _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
+
+  }
+  
+  int loadInstance(Map? data) {
+    instance = _entryDetails.get(data?["id"]) ?? EntryBlockDetails(id: -1, title: "title", subtitle: "subtitle");
+    return instance.id;
+  }
 
   @override
   void initState() {
     super.initState();
     _textEditingController = TextEditingController(text: widget.initialContent);
+    _initializeHive();
   }
 
   void _toggleEditing() {
@@ -82,19 +99,32 @@ class _WrittenContentState extends State<WrittenContent> {
     });
   }
 
+  void createInstanceBlock(){
+    instance = EntryBlockDetails(
+      id: widget.data?['id'], 
+      title: widget.data?['title'], 
+      subtitle: widget.data?['subtitle'],
+      date: widget.data?['date'],
+      day: widget.data?['day'],
+      time: widget.data?['time'],
+      content: widget.initialContent);
+
+    _entryDetails.put(widget.data?['id'], instance);
+  }
+
   void _saveChanges() {
-    // Save the changes to your data model or storage here
-    // For example, you can update the content in your database or file
-    // ...
-    //widget.initialContent = 
-    // After saving, exit the editing mode
+    createInstanceBlock();
     _toggleEditing();
+    print("after saving content of instance content ${instance.content}");
   }
 
   @override
   Widget build(BuildContext context) {
     /*return Expanded(
       child: Text(widget.data?['content']));*/
+    if(loadInstance(widget.data) != -1){
+      widget.initialContent = instance.content;
+    };
 
     return Container(
       child: _isEditing
