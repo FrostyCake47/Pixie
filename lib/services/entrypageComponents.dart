@@ -98,51 +98,53 @@ class _WrittenContentState extends State<WrittenContent> {
 
     return Container(
       child: _isEditing
-            ? Column(
-                children: [
-                  Container(
-                    child: TextField(
-                      controller: _textEditingController,
-                      onChanged: (value) {
-                        widget.initialContent = value;
-                      },
-
-                      maxLines: 17,
-                      keyboardType: TextInputType.multiline,
-                      style: const TextStyle(fontSize: 18.0, color: Colors.white),
-                      decoration: const InputDecoration(
-                        fillColor: Colors.redAccent,
-                      ),
-                    ),
-                  ),
-
-                  ElevatedButton(
-                    onPressed: _saveChanges,
-                    child: const Text('Save Changes'),
-                  ),
-
-                  /*Container(
-                    child: TextField(
-                      controller: _textEditingController,
-                      //maxLines: null, // Allow unlimited lines
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),*/
-                  
-                ],
-              )
-            : GestureDetector(
-                
-                onTap: _toggleEditing,
-                child: Container(
-                  child: Text(
-                    widget.initialContent,
-                    style: TextStyle(fontSize: 18.0, color: Colors.white),
-                  ),
-                ),
+            ? Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[500],
               ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                      SingleChildScrollView(
+                        child: TextField(
+                          controller: _textEditingController,
+                          onChanged: (value) {
+                            widget.initialContent = value;
+                          },
+                                    
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.zero
+                          ),
+                          maxLines: 15,
+                          keyboardType: TextInputType.multiline,
+                          style: const TextStyle(fontSize: 18.0, color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+              
+                    ElevatedButton(
+                      onPressed: _saveChanges,
+                      child: const Text('Save Changes'),
+                    ),                  
+                  ],
+                ),
+            )
+            : SingleChildScrollView(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.redAccent[200],
+                ),
+                child: GestureDetector(
+                    onTap: _toggleEditing,
+                    child: Container(
+                      child: Text(
+                        widget.initialContent,
+                        style: TextStyle(fontSize: 18.65, color: Colors.white),
+                      ),
+                    ),
+                  ),
+              ),
+            ),
       );
   }
 }
