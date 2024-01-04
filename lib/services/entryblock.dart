@@ -29,7 +29,7 @@ class EntryBlockDetails{
   @HiveField(6)
   late String content;
 
-  EntryBlockDetails({Key? key, required this.id, required this.title, required this.subtitle, this.date = "", this.day = "", this.time = "", this.content = "lets see"});
+  EntryBlockDetails({Key? key, required this.id, required this.title, required this.subtitle, this.date = "", this.day = "", this.time = "", this.content = "      "});
 }
 
 class EntryBlock extends StatelessWidget {

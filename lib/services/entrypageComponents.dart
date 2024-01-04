@@ -60,10 +60,10 @@ class _EntryTitleState extends State<EntryTitle> {
 
 class WrittenContent extends StatefulWidget {
   Map? data;
-  String initialContent;
+  
 
 
-  WrittenContent({Key? key, this.initialContent = "lets see", required this.data}) : super(key: key);
+  WrittenContent({Key? key, required this.data}) : super(key: key);
 
   @override
   State<WrittenContent> createState() => _WrittenContentState();
@@ -74,6 +74,7 @@ class _WrittenContentState extends State<WrittenContent> {
   bool _isEditing = false;
   late Box<EntryBlockDetails> _entryDetails;
   late EntryBlockDetails instance;
+  late String initialContent;
 
   Future<void> _initializeHive() async {
     _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
@@ -88,7 +89,6 @@ class _WrittenContentState extends State<WrittenContent> {
   @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController(text: widget.initialContent);
     _initializeHive();
   }
 
@@ -107,7 +107,7 @@ class _WrittenContentState extends State<WrittenContent> {
       date: widget.data?['date'],
       day: widget.data?['day'],
       time: widget.data?['time'],
-      content: widget.initialContent);
+      content: initialContent);
 
     _entryDetails.put(widget.data?['id'], instance);
   }
@@ -122,9 +122,14 @@ class _WrittenContentState extends State<WrittenContent> {
   Widget build(BuildContext context) {
     /*return Expanded(
       child: Text(widget.data?['content']));*/
+    
     if(loadInstance(widget.data) != -1){
-      widget.initialContent = instance.content;
-    };
+      initialContent = instance.content;
+    }
+    else{
+      initialContent = "idk";
+    }
+    _textEditingController = TextEditingController(text: initialContent);
 
     return Container(
       child: _isEditing
@@ -139,7 +144,7 @@ class _WrittenContentState extends State<WrittenContent> {
                         child: TextField(
                           controller: _textEditingController,
                           onChanged: (value) {
-                            widget.initialContent = value;
+                            initialContent = value;
                           },
                                     
                           decoration: const InputDecoration(
@@ -168,7 +173,7 @@ class _WrittenContentState extends State<WrittenContent> {
                     onTap: _toggleEditing,
                     child: Container(
                       child: Text(
-                        widget.initialContent,
+                        initialContent,
                         style: TextStyle(fontSize: 18.65, color: Colors.white),
                       ),
                     ),
