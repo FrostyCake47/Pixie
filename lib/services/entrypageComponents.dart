@@ -13,11 +13,22 @@ class EntryDateTime extends StatefulWidget {
 class _EntryDateTimeState extends State<EntryDateTime> {
   @override
   Widget build(BuildContext context) {
-    return Text(widget.data?['day'] + " · "  + widget.data?['date'] + "  |  " +  widget.data?['time'],
-      style: const TextStyle(
-        fontSize: 15,
-        color: Colors.grey
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(widget.data?['day'] + " · "  + widget.data?['date'] + "  |  " +  widget.data?['time'] ,
+          style: const TextStyle(
+            fontSize: 15,
+            color: Colors.grey
+          ),
+        ),
+        Text("#${widget.data!['id']}",
+        style: const TextStyle(
+            fontSize: 15,
+            color: Colors.grey
+          ),
+        )
+      ],
     );
   }
 }
@@ -35,7 +46,7 @@ class _EntryTitleState extends State<EntryTitle> {
   
   @override
   Widget build(BuildContext context) {
-    return Text("${widget.data!['id']} " + widget.data?['title'],
+    return Text(widget.data?['title'],
       style: const TextStyle(
         fontSize: 30,
         color: Colors.white
@@ -46,26 +57,93 @@ class _EntryTitleState extends State<EntryTitle> {
 
 
 class WrittenContent extends StatefulWidget {
-  final Map? data;
+  String initialContent;
 
-  const WrittenContent({Key? key, this.data}) : super(key: key);
+  WrittenContent({Key? key, required this.initialContent}) : super(key: key);
 
   @override
   State<WrittenContent> createState() => _WrittenContentState();
 }
 
 class _WrittenContentState extends State<WrittenContent> {
+  late TextEditingController _textEditingController;
+  bool _isEditing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController = TextEditingController(text: widget.initialContent);
+  }
+
+  void _toggleEditing() {
+    setState(() {
+      print("toggled editing");
+      _isEditing = !_isEditing;
+    });
+  }
+
+  void _saveChanges() {
+    // Save the changes to your data model or storage here
+    // For example, you can update the content in your database or file
+    // ...
+    //widget.initialContent = 
+    // After saving, exit the editing mode
+    _toggleEditing();
+  }
+
   @override
   Widget build(BuildContext context) {
     /*return Expanded(
       child: Text(widget.data?['content']));*/
 
-    return Column(
-      children: <Widget>[
-        FloatingActionButton(onPressed: (){
+    return Container(
+      child: _isEditing
+            ? Column(
+                children: [
+                  Container(
+                    child: TextField(
+                      controller: _textEditingController,
+                      onChanged: (value) {
+                        widget.initialContent = value;
+                      },
 
-        })
-      ],
-    );
+                      maxLines: 17,
+                      keyboardType: TextInputType.multiline,
+                      style: const TextStyle(fontSize: 18.0, color: Colors.white),
+                      decoration: const InputDecoration(
+                        fillColor: Colors.redAccent,
+                      ),
+                    ),
+                  ),
+
+                  ElevatedButton(
+                    onPressed: _saveChanges,
+                    child: const Text('Save Changes'),
+                  ),
+
+                  /*Container(
+                    child: TextField(
+                      controller: _textEditingController,
+                      //maxLines: null, // Allow unlimited lines
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),*/
+                  
+                ],
+              )
+            : GestureDetector(
+                
+                onTap: _toggleEditing,
+                child: Container(
+                  child: Text(
+                    widget.initialContent,
+                    style: TextStyle(fontSize: 18.0, color: Colors.white),
+                  ),
+                ),
+              ),
+      );
   }
 }
+

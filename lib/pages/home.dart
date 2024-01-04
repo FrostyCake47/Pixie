@@ -73,6 +73,8 @@ class _HomeState extends State<Home> {
             },
             decoration: const InputDecoration(
               hintText: 'Enter a title',
+              //fillColor: Color.fromARGB(255, 189, 189, 189),
+
             ),
           ),
           actions: <Widget>[
@@ -103,6 +105,10 @@ class _HomeState extends State<Home> {
               child: const Text('OK'),
             ),
           ],
+
+        backgroundColor: Colors.grey[100],
+        //elevation: 0,
+        //shadowColor: Colors.redAccent,
         );
       },
     );

@@ -14,6 +14,7 @@ class Entry extends StatefulWidget {
 
 class _EntryState extends State<Entry> {
   Map? data = {};
+  //EntryBlockDetails? instance;
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +50,17 @@ class EntryBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       decoration: const BoxDecoration(),
       child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
           EntryDateTime(data: data,),
-          const SizedBox(height: 5,),
-          EntryTitle(data: data,)
+          const SizedBox(height: 10),
+          EntryTitle(data: data,),
+          const SizedBox(height: 10),
+          WrittenContent(initialContent: "lets see"),
         ],
       ),
     );
