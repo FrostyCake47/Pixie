@@ -4,27 +4,22 @@ import 'package:hive/hive.dart';
 
 
 
-class EntryDateTime extends StatefulWidget {
+class EntryDateTime extends StatelessWidget {
   final Map? data;
   const EntryDateTime({Key? key, this.data}) : super(key: key);
 
-  @override
-  State<EntryDateTime> createState() => _EntryDateTimeState();
-}
-
-class _EntryDateTimeState extends State<EntryDateTime> {
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(widget.data?['day'] + " · "  + widget.data?['date'] + "  |  " +  widget.data?['time'] ,
+        Text(data?['day'] + " · "  + data?['date'] + "  |  " +  data?['time'] ,
           style: const TextStyle(
             fontSize: 15,
             color: Colors.grey
           ),
         ),
-        Text("#${widget.data!['id']}",
+        Text("#${data!['id']}",
         style: const TextStyle(
             fontSize: 15,
             color: Colors.grey
@@ -34,7 +29,6 @@ class _EntryDateTimeState extends State<EntryDateTime> {
     );
   }
 }
-
 
 class EntryTitle extends StatefulWidget {
   final Map? data;
