@@ -183,4 +183,3 @@ class _WrittenContentState extends State<WrittenContent> {
       );
   }
 }
-

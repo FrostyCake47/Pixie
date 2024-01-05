@@ -53,15 +53,17 @@ class EntryBody extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       decoration: const BoxDecoration(),
-      child:Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-          EntryDateTime(data: data,),
-          const SizedBox(height: 10),
-          EntryTitle(data: data,),
-          const SizedBox(height: 10),
-          WrittenContent(data:data),
-        ],
+      child:SingleChildScrollView(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+            EntryDateTime(data: data,),
+            const SizedBox(height: 10),
+            EntryTitle(data: data,),
+            const SizedBox(height: 10),
+            WrittenContent(data:data),
+          ],
+        ),
       ),
     );
   }
