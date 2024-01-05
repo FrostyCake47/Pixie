@@ -60,9 +60,6 @@ class _EntryTitleState extends State<EntryTitle> {
 
 class WrittenContent extends StatefulWidget {
   Map? data;
-  
-
-
   WrittenContent({Key? key, required this.data}) : super(key: key);
 
   @override

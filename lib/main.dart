@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:diary/pages/home.dart';
 import 'package:diary/pages/loading.dart';
 import 'package:diary/pages/entry.dart';
+import 'package:diary/pages/entryedit.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -29,6 +30,7 @@ Future<void> main() async{
         "/" : (context) => Loading(),
         "/home" : (context) => Home(),
         "/entry" : (context) => Entry(),
+        "/entryedit" : (context) => EntryEdit(),
       },
 
       debugShowCheckedModeBanner: false,
@@ -36,6 +38,8 @@ Future<void> main() async{
           scaffoldBackgroundColor: const Color.fromARGB(255, 28, 28, 28),
           appBarTheme: const AppBarTheme(
           backgroundColor: Color.fromARGB(255, 28, 28, 28),
+          titleTextStyle: TextStyle(color: Colors.white)
+          
           //backgroundColor: Colors.redAccent
         )
       ),

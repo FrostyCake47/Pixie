@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:diary/services/entryblock.dart';
 import 'package:diary/services/entrypageComponents.dart';
+import 'package:hive/hive.dart';
 //import 'package:diary/services/database.txt';
 
 
@@ -13,21 +14,36 @@ class Entry extends StatefulWidget {
 }
 
 class _EntryState extends State<Entry> {
-  Map? data = {};
-  EntryBlockDetails? instance;
+  late Map? data = {};
+  late EntryBlockDetails? instance;
+  late Box<EntryBlockDetails> _entryDetails;
+
+  Future<void> _initializeHive() async {
+    _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
+  }
+
+  void updateData(){
+    _initializeHive();
+    instance = _entryDetails.get(data?['id']) ?? EntryBlockDetails(id: -1, title: "title", subtitle: "subtitle");
+    data?['title'] = instance?.title ?? "title";
+    data?['content'] = instance?.content ?? "content";
+  }
 
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context)?.settings.arguments as Map?;
+    updateData();
     return Scaffold(
-      appBar: const EntryAppBar(),
+      appBar: EntryAppBar(data:data),
       body: EntryBody(data:data)
     );
   }
 }
 
 class EntryAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const EntryAppBar({super.key});
+  final Map? data;
+  const EntryAppBar({super.key, required this.data});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +51,19 @@ class EntryAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: const IconThemeData(
         color: Colors.white
       ),
-    );;
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(onPressed: (){
+            Navigator.pushNamed(context, "/entryedit", arguments: {
+                    'id': data?['id'],
+            });
+          }, 
+          icon: const Icon(Icons.edit, color: Colors.white,))
+        ],
+      ),
+      
+    );
   }
 
   @override
