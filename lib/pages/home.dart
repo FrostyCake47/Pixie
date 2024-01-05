@@ -141,13 +141,12 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
       title: const Center(
         child: Row(
           children: <Widget>[
-            Icon(Icons.book,),
+            Icon(Icons.book, size: 25),
             SizedBox(width: 10,),
-            Expanded(child: Text("My Diary")),
+            Expanded(child: Text("Pixie", style: TextStyle(fontSize: 25),)),
             Icon(Icons.search),
             SizedBox(width: 10,),
-            CircleAvatar(radius: 10, child: Image(
-              image: AssetImage('assets/PaperPlanes1.jpg')),
+            CircleAvatar(radius: 15, backgroundImage: AssetImage('assets/PaperPlanes1.jpg'),
               )
           ],
         ),
@@ -174,13 +173,21 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     try{
       return Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color.fromARGB(255, 28, 28, 28), Color.fromARGB(255, 18, 18, 18)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+          )
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 2),
         child: ListView.builder(
           itemCount: widget.entryBlocks.length,
           itemBuilder: (context, index){
             print("currently in itembuilder");
             return EntryBlock(parentContext: context, instance: widget.entryBlocks[index], deleteItemCallback: widget.deleteItem);  
           },
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),  
+          padding: const EdgeInsets.symmetric(horizontal: 10),  
         ),
       );
     }
