@@ -167,7 +167,7 @@ class _WrittenContentState extends State<WrittenContent> {
             : SingleChildScrollView(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.redAccent[200],
+                  //color: Colors.redAccent[200],
                 ),
                 child: GestureDetector(
                     onTap: _toggleEditing,
