@@ -110,6 +110,7 @@ class EntryEditTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: TextEditingController(text: instance.title),
+      maxLines: null,
       decoration: const InputDecoration(
         border: InputBorder.none,
         contentPadding: EdgeInsets.zero,
@@ -142,9 +143,10 @@ class EntryEditContent extends StatelessWidget {
           onContentChanged(value);
         },      
         decoration: const InputDecoration(
-          contentPadding: EdgeInsets.zero
+          contentPadding: EdgeInsets.zero,
+          border: InputBorder.none
         ),
-        maxLines: 15,
+        maxLines: null,
         keyboardType: TextInputType.multiline,
         style: const TextStyle(fontSize: 18.0, color: Colors.white),
         textAlign: TextAlign.left,

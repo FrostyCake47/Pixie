@@ -61,6 +61,12 @@ class EntryAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white,),
+          onPressed: (){
+            Navigator.pop(context, {'hasChanged': true});
+          }
+        ),
       iconTheme: const IconThemeData(
         color: Colors.white
       ),

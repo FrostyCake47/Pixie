@@ -57,6 +57,14 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void updateChange(bool changed){
+    if(changed){
+      setState(() {
+        _initializeHive();
+      });
+    }
+  }
+
   Future<void> _showInputDialog(BuildContext context) async {
     String newTitle = '';
     String newSubTitle = '';
@@ -93,7 +101,7 @@ class _HomeState extends State<Home> {
                   print("going to create instance");
                   EntryBlockDetails instance = EntryBlockDetails(id: currentID, title: newTitle, subtitle: currentID.toString());
                   print("going to create instanceblock");
-                  EntryBlock instanceblock = EntryBlock(parentContext: context, instance: instance, deleteItemCallback: deleteItem);
+                  EntryBlock instanceblock = EntryBlock(parentContext: context, instance: instance, deleteItemCallback: deleteItem, updateChange: updateChange,);
                   
                   entryBlocks.add(instance);
                   _entryDetails.put(currentID, instance);
@@ -117,7 +125,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(),
-      body: HomeBody(entryBlocks: entryBlocks, deleteItem: deleteItem,),
+      body: HomeBody(entryBlocks: entryBlocks, deleteItem: deleteItem, updateChange: updateChange,),
             floatingActionButton: FloatingActionButton(onPressed: (){
               setState(() {
                 _showInputDialog(context);
@@ -161,8 +169,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
 class HomeBody extends StatefulWidget {
   final List entryBlocks;
   final void Function(int) deleteItem;
+  final void Function(bool) updateChange;
 
-  const HomeBody({Key? key, required this.entryBlocks, required this.deleteItem}) : super(key: key);
+  const HomeBody({Key? key, required this.entryBlocks, required this.deleteItem, required this.updateChange}) : super(key: key);
 
   @override
   State<HomeBody> createState() => _HomeBodyState();
@@ -185,7 +194,7 @@ class _HomeBodyState extends State<HomeBody> {
           itemCount: widget.entryBlocks.length,
           itemBuilder: (context, index){
             print("currently in itembuilder");
-            return EntryBlock(parentContext: context, instance: widget.entryBlocks[index], deleteItemCallback: widget.deleteItem);  
+            return EntryBlock(parentContext: context, instance: widget.entryBlocks[index], deleteItemCallback: widget.deleteItem, updateChange: widget.updateChange,);  
           },
           padding: const EdgeInsets.symmetric(horizontal: 10),  
         ),

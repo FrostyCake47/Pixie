@@ -61,114 +61,36 @@ class WrittenContent extends StatefulWidget {
 }
 
 class _WrittenContentState extends State<WrittenContent> {
-  late TextEditingController _textEditingController;
-  bool _isEditing = false;
   late Box<EntryBlockDetails> _entryDetails;
   late EntryBlockDetails instance;
-  late String initialContent;
 
   Future<void> _initializeHive() async {
     _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
 
   }
   
-  int loadInstance(Map? data) {
+  void loadInstance(Map? data) {
     instance = _entryDetails.get(data?["id"]) ?? EntryBlockDetails(id: -1, title: "title", subtitle: "subtitle");
-    return instance.id;
   }
 
   @override
   void initState() {
     super.initState();
     _initializeHive();
-  }
-
-  void _toggleEditing() {
-    setState(() {
-      print("toggled editing");
-      _isEditing = !_isEditing;
-    });
-  }
-
-  void createInstanceBlock(){
-    instance = EntryBlockDetails(
-      id: widget.data?['id'], 
-      title: widget.data?['title'], 
-      subtitle: widget.data?['subtitle'],
-      date: widget.data?['date'],
-      day: widget.data?['day'],
-      time: widget.data?['time'],
-      content: initialContent);
-
-    _entryDetails.put(widget.data?['id'], instance);
-  }
-
-  void _saveChanges() {
-    createInstanceBlock();
-    _toggleEditing();
-    print("after saving content of instance content ${instance.content}");
+    loadInstance(widget.data);
   }
 
   @override
-  Widget build(BuildContext context) {
-    /*return Expanded(
-      child: Text(widget.data?['content']));*/
-    
-    if(loadInstance(widget.data) != -1){
-      initialContent = instance.content;
-    }
-    else{
-      initialContent = "idk";
-    }
-    _textEditingController = TextEditingController(text: initialContent);
-
+  Widget build(BuildContext context) { 
     return Container(
-      child: _isEditing
-            ? Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[500],
-              ),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                      SingleChildScrollView(
-                        child: TextField(
-                          controller: _textEditingController,
-                          onChanged: (value) {
-                            initialContent = value;
-                          },
-                                    
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.zero
-                          ),
-                          maxLines: 15,
-                          keyboardType: TextInputType.multiline,
-                          style: const TextStyle(fontSize: 18.0, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-              
-                    ElevatedButton(
-                      onPressed: _saveChanges,
-                      child: const Text('Save Changes'),
-                    ),                  
-                  ],
-                ),
-            )
-            : SingleChildScrollView(
+      child: SingleChildScrollView(
               child: Container(
-                decoration: BoxDecoration(
-                  //color: Colors.redAccent[200],
-                ),
-                child: GestureDetector(
-                    onTap: _toggleEditing,
-                    child: Container(
-                      child: Text(
-                        initialContent,
-                        style: TextStyle(fontSize: 18.65, color: Colors.white),
-                      ),
-                    ),
+                child: Container(
+                  child: Text(
+                    instance.content,
+                    style: TextStyle(fontSize: 18.65, color: Colors.white),
                   ),
+                ),
               ),
             ),
       );

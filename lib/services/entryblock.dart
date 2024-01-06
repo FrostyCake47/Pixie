@@ -36,6 +36,7 @@ class EntryBlock extends StatelessWidget {
   final EntryBlockDetails? instance;
   final BuildContext parentContext;
   final void Function(int) deleteItemCallback;
+  final void Function(bool) updateChange;
 
   void createTime(){
     print("called createTime()");
@@ -47,7 +48,7 @@ class EntryBlock extends StatelessWidget {
   }
 
 
-  EntryBlock({Key? key, required this.instance, required this.parentContext, required this.deleteItemCallback}): super(key: key){
+  EntryBlock({Key? key, required this.instance, required this.parentContext, required this.deleteItemCallback, required this.updateChange}): super(key: key){
     print(instance?.title);
     print("EntryBlock constructor");
 
@@ -94,7 +95,7 @@ class EntryBlock extends StatelessWidget {
           tileColor: Colors.grey[900],
         
           onTap: () async {
-            await Navigator.pushNamed(context, '/entry', arguments: {
+            dynamic result = await Navigator.pushNamed(context, '/entry', arguments: {
               'title': instance?.title ?? "title", 
               'subtitle': instance?.subtitle ?? "subtitle", 
               'date': instance?.date ?? "date", 
@@ -103,6 +104,9 @@ class EntryBlock extends StatelessWidget {
               'id' : instance?.id ?? "id",
               'content' : instance?.content ?? "content", //lets see
             });
+
+            print("result of entryback" + result['hasChanged'].toString());
+            updateChange(result['hasChanged']);
           },
           
           titleTextStyle: const TextStyle(
