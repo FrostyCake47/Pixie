@@ -9,6 +9,7 @@ import 'package:hive/hive.dart';
 class Entry extends StatefulWidget {
   const Entry({super.key});
 
+
   @override
   State<Entry> createState() => _EntryState();
 }
@@ -18,31 +19,43 @@ class _EntryState extends State<Entry> {
   late EntryBlockDetails? instance;
   late Box<EntryBlockDetails> _entryDetails;
 
+  @override
+  void initState() {
+    super.initState();
+    updateData();
+  }
+
   Future<void> _initializeHive() async {
     _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
   }
 
   void updateData(){
-    _initializeHive();
-    instance = _entryDetails.get(data?['id']) ?? EntryBlockDetails(id: -1, title: "title", subtitle: "subtitle");
-    data?['title'] = instance?.title ?? "title";
-    data?['content'] = instance?.content ?? "content";
+    setState(() {
+      _initializeHive();
+      print("setUpdatedTime");
+      instance = _entryDetails.get(data?['id']) ?? EntryBlockDetails(id: -1, title: "title", subtitle: "subtitle");
+      data?['title'] = instance?.title ?? "title";
+      data?['content'] = instance?.content ?? "content";
+    });
+    
   }
 
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context)?.settings.arguments as Map?;
-    updateData();
+    //updateData();
     return Scaffold(
-      appBar: EntryAppBar(data:data),
+      appBar: EntryAppBar(data:data, updateCallback: updateData),
       body: EntryBody(data:data)
     );
   }
 }
 
-class EntryAppBar extends StatelessWidget implements PreferredSizeWidget {
+class EntryAppBar extends StatelessWidget implements PreferredSizeWidget{
   final Map? data;
-  const EntryAppBar({super.key, required this.data});
+  final void Function() updateCallback;
+
+  const EntryAppBar({super.key, required this.data, required this.updateCallback});
   
 
   @override
@@ -54,10 +67,12 @@ class EntryAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          IconButton(onPressed: (){
-            Navigator.pushNamed(context, "/entryedit", arguments: {
-                    'id': data?['id'],
-            });
+          IconButton(onPressed: () async {
+            dynamic result = await Navigator.pushNamed(context, "/entryedit", arguments: {
+                    'id': data?['id']});
+
+            print("result id at entry " + result["id"].toString());
+            updateCallback();
           }, 
           icon: const Icon(Icons.edit, color: Colors.white,))
         ],
@@ -67,9 +82,8 @@ class EntryAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
-
 
 class EntryBody extends StatelessWidget {
   final Map? data;

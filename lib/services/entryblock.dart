@@ -12,7 +12,7 @@ class EntryBlockDetails{
   late final int id;
 
   @HiveField(1)
-  late final String title;
+  late String title;
 
   @HiveField(2)
   late final String subtitle;
