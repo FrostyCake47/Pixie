@@ -71,8 +71,10 @@ class EntryAppBar extends StatelessWidget implements PreferredSizeWidget{
             dynamic result = await Navigator.pushNamed(context, "/entryedit", arguments: {
                     'id': data?['id']});
 
-            print("result id at entry " + result["id"].toString());
-            updateCallback();
+            if (result != null){
+              print("result id at entry " + result["id"].toString());
+              updateCallback();
+            }
           }, 
           icon: const Icon(Icons.edit, color: Colors.white,))
         ],

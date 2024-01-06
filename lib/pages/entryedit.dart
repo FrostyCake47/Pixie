@@ -59,10 +59,13 @@ class _EntryEditState extends State<EntryEdit> {
       body: EntryEditBody(
         instance: instance,
         onTitleChanged: (newTitle) {
-          // Update the title in the parent widget's state
           print("instance.title changed line 62 entryedit");
           instance.title = newTitle;
         },
+        onContentChanged: (newContent){
+          instance.content = newContent;
+        },
+
       ),
     );
   }
@@ -71,8 +74,9 @@ class _EntryEditState extends State<EntryEdit> {
 class EntryEditBody extends StatelessWidget {
   final EntryBlockDetails instance;
   final Function(String) onTitleChanged;
+  final Function(String) onContentChanged;
 
-  EntryEditBody({Key? key, required this.instance, required this.onTitleChanged}) : super(key: key);
+  EntryEditBody({Key? key, required this.instance, required this.onTitleChanged, required this.onContentChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +91,8 @@ class EntryEditBody extends StatelessWidget {
             EntryEditTime(instance: instance),
             const SizedBox(height: 10,),
             EntryEditTitle(instance: instance, onTitleChanged: onTitleChanged),
+            const SizedBox(height: 10,),
+            EntryEditContent(instance: instance, onContentChanged: onContentChanged)
           ],
         ),
       ),
@@ -119,6 +125,34 @@ class EntryEditTitle extends StatelessWidget {
     );
   }
 }
+
+class EntryEditContent extends StatelessWidget {
+  final EntryBlockDetails instance;
+  final Function(String) onContentChanged;
+
+  const EntryEditContent({super.key, required this.instance, required this.onContentChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: TextField(
+        controller: TextEditingController(text: instance.content),
+
+        onChanged: (value) {
+          onContentChanged(value);
+        },      
+        decoration: const InputDecoration(
+          contentPadding: EdgeInsets.zero
+        ),
+        maxLines: 15,
+        keyboardType: TextInputType.multiline,
+        style: const TextStyle(fontSize: 18.0, color: Colors.white),
+        textAlign: TextAlign.left,
+      ),
+    );
+  }
+}
+
 
 class EntryEditTime extends StatelessWidget {
   const EntryEditTime({
