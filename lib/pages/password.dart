@@ -14,7 +14,10 @@ class _PasswordPageState extends State<PasswordPage> {
   void enterPass(index){
     setState(() {
       if(inputPass.length >= 4) inputPass = "";
-      inputPass += (index).toString();
+      
+      if(index == -1 && int.tryParse(inputPass) != null && inputPass.isNotEmpty) {inputPass = inputPass.substring(0, inputPass.length -1);}
+      else{inputPass += (index).toString();}
+      if(inputPass == "-1") inputPass = "";
     });
   }
 
@@ -30,7 +33,7 @@ class _PasswordPageState extends State<PasswordPage> {
             SizedBox(height: 20,),
             Text(inputPass, style: TextStyle(color: Colors.white, fontSize: 20),),
             SizedBox(height: 20,),
-            
+
             Dialpad(enterPass: enterPass,),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
