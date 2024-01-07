@@ -26,5 +26,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family:  DiamondIcon
+      fonts:
+       - asset: assets/fonts/DiamondIcon.ttf
   assets:
     - 'assets/'

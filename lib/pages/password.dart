@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 
 class PasswordPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class _PasswordPageState extends State<PasswordPage> {
 
   void enterPass(index){
     setState(() {
-      if(inputPass.length >= 4) inputPass = "";
+      if(inputPass.length >= 3) inputPass = "";
       
       if(index == -1 && int.tryParse(inputPass) != null && inputPass.isNotEmpty) {inputPass = inputPass.substring(0, inputPass.length -1);}
       else{inputPass += (index).toString();}
@@ -29,12 +30,24 @@ class _PasswordPageState extends State<PasswordPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 40,),
             Icon(Icons.lock, color: Colors.redAccent[400], size: 50,),
-            SizedBox(height: 20,),
-            Text(inputPass, style: TextStyle(color: Colors.white, fontSize: 20),),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
+            //Text(inputPass, style: TextStyle(color: Colors.white, fontSize: 20),),
+            const SizedBox(height: 20,),
+            Wrap(
+              spacing: 15,
+              children: [
+                Icon(DiamondIcon.diamonds, color: inputPass.length > 0 ? Colors.redAccent[400] :Colors.white, size: 40,),
+                Icon(DiamondIcon.diamonds, color: inputPass.length > 1 ? Colors.redAccent[400] :Colors.white,size: 40,),
+                Icon(DiamondIcon.diamonds, color: inputPass.length > 2 ? Colors.redAccent[400] :Colors.white,size: 40,),
+                Icon(DiamondIcon.diamonds, color: inputPass.length > 3 ? Colors.redAccent[400] :Colors.white,size: 40,),
 
+              ],
+            ),
+            SizedBox(height: 40,),
             Dialpad(enterPass: enterPass,),
+            SizedBox(height: 5,),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: Row(
@@ -43,7 +56,6 @@ class _PasswordPageState extends State<PasswordPage> {
                   DialButtons(enterPass: enterPass, value: -1, displayicon: Icons.backspace_outlined,),
                   DialButtons(enterPass: enterPass, value: 0, displayicon: Icons.exposure_zero,),
                   DialButtons(enterPass: enterPass, value: -2, displayicon: Icons.check,),
-              
                 ],
               ),
             )
@@ -81,7 +93,7 @@ class _DialpadState extends State<Dialpad> { // Store the input numbers
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 5.0, // Adjust spacing as needed
-          mainAxisSpacing: 8.0,  // Adjust spacing as needed
+          mainAxisSpacing: 10.0,  // Adjust spacing as needed
           childAspectRatio: 4.0 / 2.0,
           ), 
         itemBuilder: (context, index){
@@ -128,4 +140,15 @@ class DialButtons extends StatelessWidget {
       ),
     );
   }
+}
+
+
+
+class DiamondIcon {
+  DiamondIcon._();
+
+  static const _kFontFam = 'DiamondIcon';
+  static const String? _kFontPkg = null;
+
+  static const IconData diamonds = IconData(0xe994, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
