@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
 class PasswordPage extends StatefulWidget {
@@ -11,11 +12,59 @@ class PasswordPage extends StatefulWidget {
 
 class _PasswordPageState extends State<PasswordPage> {
   String inputPass = "";
+  late Box<String> passlocker;
+  late String password;
+  late String displaytext;
+
+  @override
+  void initState() {
+    super.initState();
+    initializePassLock();
+  }
+
+  void initializePassLock() {
+    passlocker = Hive.box<String>('passlock');
+    password = passlocker.get(0) ?? "null";
+    if(password == "null") {
+      displaytext = "Create new Password";
+    } else {
+      displaytext = "Enter password";
+    }
+  }
+
+  void authenticate(){
+    if(password == "null"){
+      passlocker.put(0, inputPass);
+      print("created new pass");
+      Navigator.pushNamed(context, "/home");
+    }
+    else if(inputPass == password){
+      Navigator.pushNamed(context, "/home");
+      print("correct password");
+    }
+    else if(inputPass != password){
+      String temp = displaytext;
+      print("incorrect password");
+      setState(() {
+        displaytext = "incorrect password";
+      });
+
+      Future.delayed(const Duration(seconds: 2), () {
+        setState(() {
+          displaytext = temp;
+        });
+      });
+      
+    }
+  }
 
   void enterPass(index){
     setState(() {
-      if(inputPass.length >= 3) inputPass = "";
-      
+      if(index == -2) {
+        authenticate();
+        return;
+      }
+      if(inputPass.length >= 4) inputPass = "";
       if(index == -1 && int.tryParse(inputPass) != null && inputPass.isNotEmpty) {inputPass = inputPass.substring(0, inputPass.length -1);}
       else{inputPass += (index).toString();}
       if(inputPass == "-1") inputPass = "";
@@ -33,7 +82,8 @@ class _PasswordPageState extends State<PasswordPage> {
             SizedBox(height: 40,),
             Icon(Icons.lock, color: Colors.redAccent[400], size: 50,),
             const SizedBox(height: 20,),
-            //Text(inputPass, style: TextStyle(color: Colors.white, fontSize: 20),),
+            Text(displaytext, style: TextStyle(color: Colors.white, fontSize: 20),),
+            Text(inputPass, style: TextStyle(color: Colors.white, fontSize: 20),),
             const SizedBox(height: 20,),
             Wrap(
               spacing: 15,
