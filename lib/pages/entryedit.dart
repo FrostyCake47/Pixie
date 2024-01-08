@@ -137,7 +137,7 @@ class EntryEditContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: TextField(
-        controller: TextEditingController(text: instance.content),
+        controller: TextEditingController(text: instance.content == "      " ? "" : instance.content),
 
         onChanged: (value) {
           onContentChanged(value);
