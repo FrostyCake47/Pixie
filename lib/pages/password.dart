@@ -12,9 +12,11 @@ class PasswordPage extends StatefulWidget {
 
 class _PasswordPageState extends State<PasswordPage> {
   String inputPass = "";
+  String resetText = "Reset password";
   late Box<String> passlocker;
   late String password;
   late String displaytext;
+  
 
   @override
   void initState() {
@@ -35,21 +37,22 @@ class _PasswordPageState extends State<PasswordPage> {
   void authenticate(){
     if(password == "null"){
       passlocker.put(0, inputPass);
-      print("created new pass");
+      //print("created new pass");
       Navigator.pushNamed(context, "/home");
     }
     else if(inputPass == password){
       Navigator.pushNamed(context, "/home");
-      print("correct password");
+      //print("correct password");
     }
     else if(inputPass != password){
       String temp = displaytext;
-      print("incorrect password");
+      //print("incorrect password");
       setState(() {
         displaytext = "incorrect password";
+        inputPass = "";
       });
 
-      Future.delayed(const Duration(seconds: 2), () {
+      Future.delayed(const Duration(seconds: 1), () {
         setState(() {
           displaytext = temp;
         });
@@ -58,13 +61,17 @@ class _PasswordPageState extends State<PasswordPage> {
     }
   }
 
+  void resetPassword(){
+    passlocker.clear();
+  }
+
   void enterPass(index){
     setState(() {
       if(index == -2) {
         authenticate();
         return;
       }
-      if(inputPass.length >= 4) inputPass = "";
+      if(inputPass.length >= 4) setState(() {inputPass = "";});
       if(index == -1 && int.tryParse(inputPass) != null && inputPass.isNotEmpty) {inputPass = inputPass.substring(0, inputPass.length -1);}
       else{inputPass += (index).toString();}
       if(inputPass == "-1") inputPass = "";
@@ -108,7 +115,16 @@ class _PasswordPageState extends State<PasswordPage> {
                   DialButtons(enterPass: enterPass, value: -2, displayicon: Icons.check,),
                 ],
               ),
-            )
+            ),
+            const SizedBox(height: 20,),
+            TextButton(
+              onPressed: (){setState(() {
+                resetPassword(); 
+                password = "null"; 
+                resetText = "password has been reset\nEnter new password";
+                });
+              }, 
+              child: Text(resetText,textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),
             
           ],
         ),

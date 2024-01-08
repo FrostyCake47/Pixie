@@ -42,7 +42,8 @@ Future<void> main() async{
           scaffoldBackgroundColor: const Color.fromARGB(255, 28, 28, 28),
           appBarTheme: const AppBarTheme(
           backgroundColor: Color.fromARGB(255, 28, 28, 28),
-          titleTextStyle: TextStyle(color: Colors.white)
+          titleTextStyle: TextStyle(color: Colors.white),
+          //toolbarTextStyle: TextStyle(color: Colors.white),
           
           //backgroundColor: Colors.redAccent
         )
