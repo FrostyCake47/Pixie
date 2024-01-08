@@ -89,8 +89,8 @@ class _PasswordPageState extends State<PasswordPage> {
             SizedBox(height: 40,),
             Icon(Icons.lock, color: Colors.redAccent[400], size: 50,),
             const SizedBox(height: 20,),
-            Text(displaytext, style: TextStyle(color: Colors.white, fontSize: 20),),
-            Text(inputPass, style: TextStyle(color: Colors.white, fontSize: 20),),
+            Text(displaytext, style: TextStyle(color: Colors.white, fontSize: 20,),),
+            //Text(inputPass, style: TextStyle(color: Colors.white, fontSize: 20),),
             const SizedBox(height: 20,),
             Wrap(
               spacing: 15,
