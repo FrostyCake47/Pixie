@@ -1,3 +1,4 @@
+import 'package:diary/pages/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:diary/pages/home.dart';
 import 'package:diary/pages/loading.dart';
@@ -35,6 +36,7 @@ Future<void> main() async{
         "/entry" : (context) => Entry(),
         "/entryedit" : (context) => EntryEdit(),
         "/pass" : (context) => PasswordPage(),
+        "/setting" : (context) => Setting(),
       },
 
       debugShowCheckedModeBanner: false,
@@ -43,9 +45,6 @@ Future<void> main() async{
           appBarTheme: const AppBarTheme(
           backgroundColor: Color.fromARGB(255, 28, 28, 28),
           titleTextStyle: TextStyle(color: Colors.white),
-          //toolbarTextStyle: TextStyle(color: Colors.white),
-          
-          //backgroundColor: Colors.redAccent
         )
       ),
     )

@@ -146,7 +146,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
       automaticallyImplyLeading: false,
       iconTheme: const IconThemeData(color: Colors.white),
       titleTextStyle: const TextStyle(color: Colors.white),
-      title: const Center(
+      title: Center(
         child: Row(
           children: <Widget>[
             Icon(Icons.book, size: 25),
@@ -155,7 +155,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
             Icon(Icons.search),
             SizedBox(width: 10,),
             CircleAvatar(radius: 15, backgroundImage: AssetImage('assets/PaperPlanes1.jpg'),
-              )
+              ),
+            IconButton(onPressed: (){
+              Navigator.pushNamed(context, '/setting');
+            }, icon: Icon(Icons.settings), color: Colors.white,),
           ],
         ),
       ),
