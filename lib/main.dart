@@ -11,21 +11,25 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:diary/services/entryblock.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 
 Future<void> main() async{
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+
   await Hive.initFlutter();
   Hive.registerAdapter(EntryBlockDetailsAdapter());
-
-  // Get the application documents directory
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
-
-  // Open boxes
+  
   print("setting entryDetails in main.dart");
   var entryDetails = await Hive.openBox<EntryBlockDetails>('entrydetails');
   var idTracker = await Hive.openBox<int>("idtracker");
   var passlock = await Hive.openBox<String>("passlock");
-  //var entryContents = await Hive.openBox<EntryBlock>('entrycontents');
 
 
   runApp(MaterialApp(

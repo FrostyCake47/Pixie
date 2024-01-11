@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "375385385152",
+    "project_id": "pixie-0",
+    "storage_bucket": "pixie-0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375385385152:android:9d573b006c7b95a2b5a525",
+        "android_client_info": {
+          "package_name": "com.example.diary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRUCyZ6B0mIhdVK_a8ClkeFSG8zEO0xkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
