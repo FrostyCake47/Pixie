@@ -1,13 +1,15 @@
+import 'package:diary/pages/Auth/login.dart';
 import 'package:diary/pages/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:diary/pages/home.dart';
 import 'package:diary/pages/loading.dart';
 import 'package:diary/pages/entry.dart';
 import 'package:diary/pages/entryedit.dart';
-import 'package:diary/pages/password.dart';
+import 'package:diary/pages/Auth/password.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:diary/services/entryblock.dart';
 
@@ -16,6 +18,7 @@ import 'firebase_options.dart';
 
 
 Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -25,7 +28,7 @@ Future<void> main() async{
   Hive.registerAdapter(EntryBlockDetailsAdapter());
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
-  
+
   print("setting entryDetails in main.dart");
   var entryDetails = await Hive.openBox<EntryBlockDetails>('entrydetails');
   var idTracker = await Hive.openBox<int>("idtracker");
@@ -41,6 +44,7 @@ Future<void> main() async{
         "/entryedit" : (context) => EntryEdit(),
         "/pass" : (context) => PasswordPage(),
         "/setting" : (context) => Setting(),
+        "/login" : (context) => Login(),
       },
 
       debugShowCheckedModeBanner: false,

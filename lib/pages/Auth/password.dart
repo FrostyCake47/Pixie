@@ -86,7 +86,7 @@ class _PasswordPageState extends State<PasswordPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 40,),
+            const SizedBox(height: 40,),
             Icon(Icons.lock, color: Colors.redAccent[400], size: 50,),
             const SizedBox(height: 20,),
             Text(displaytext, style: TextStyle(color: Colors.white, fontSize: 20,),),

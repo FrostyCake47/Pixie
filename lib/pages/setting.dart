@@ -9,11 +9,25 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  List<SettingTile> settingTileList = [
-    SettingTile(title: "Change password", icon: Icons.password, desc: "Reset your current password", iconColor: Colors.grey[600],),
-    SettingTile(title: "About me", icon: Icons.favorite, desc: "Mwaaa my first app", iconColor: Colors.redAccent[400],),
+  late List<SettingTile> settingTileList;
 
-  ];
+
+  @override
+  void initState() {
+    super.initState();
+    settingTileList = [
+    SettingTile(title: "Login/Register", icon: Icons.perm_identity_rounded, desc: "Login to your account", iconColor: Colors.blue[700], ontap: goToLogin,),
+    SettingTile(title: "Change password", icon: Icons.password, desc: "Reset your current password", iconColor: Colors.grey[600], ontap: doNothing,),
+    SettingTile(title: "About me", icon: Icons.favorite, desc: "Mwaaa my first app", iconColor: Colors.redAccent[400], ontap: doNothing,),
+    ];
+  }
+
+  void goToLogin(){
+    Navigator.pushNamed(context, "/login");
+  }
+
+  void doNothing(){}
+  
 
   @override
   Widget build(BuildContext context) {
@@ -34,23 +48,25 @@ class SettingTile extends StatelessWidget {
   final IconData icon;
   final String desc;
   final Color? iconColor;
-  const SettingTile({super.key, required this.title, required this.icon, required this.desc, required this.iconColor});
+  final void Function()? ontap;
+
+  const SettingTile({super.key, required this.title, required this.icon, required this.desc, required this.iconColor, required this.ontap});
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-        child: ListTile(
-          tileColor: Colors.black45,
-          leading: Icon(icon, color: iconColor,),
-          title: Text(title),
-          subtitle: Text(desc, style: TextStyle(color: Colors.grey[400])),
-        
-          textColor: Colors.white,
-          iconColor: Colors.white,
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 1),
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(20)),
+        tileColor: Colors.grey[900],
+        leading: Icon(icon, color: iconColor,),
+        title: Text(title),
+        subtitle: Text(desc, style: TextStyle(color: Colors.grey[400])),
+      
+        textColor: Colors.white,
+        iconColor: Colors.white,
+
+        onTap: ontap,
       ),
     );
   }
