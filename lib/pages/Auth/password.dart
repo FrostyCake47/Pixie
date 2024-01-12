@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:diary/services/pixietext.dart';
 
 
 class PasswordPage extends StatefulWidget {
@@ -87,7 +88,8 @@ class _PasswordPageState extends State<PasswordPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 40,),
-            Icon(Icons.lock, color: Colors.redAccent[400], size: 50,),
+            //Icon(Icons.lock, color: Colors.redAccent[400], size: 50,),
+            Pixie(),
             const SizedBox(height: 20,),
             Text(displaytext, style: TextStyle(color: Colors.white, fontSize: 20,),),
             //Text(inputPass, style: TextStyle(color: Colors.white, fontSize: 20),),
