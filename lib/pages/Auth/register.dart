@@ -15,7 +15,12 @@ class Register extends StatelessWidget {
 
   void editValueOnChange(String value, String str){
     if(str == "Email") email = value;
-    else{password = value;}
+    else if(str == "Password"){password = value;}
+    else if(str == "Confirm Password"){confpassword = value;}
+  }
+
+  void signup(){
+    if(password == confpassword) print("perfect homie" + password + confpassword);
   }
 
   void doNothing(){}
@@ -27,24 +32,18 @@ class Register extends StatelessWidget {
       body: SingleChildScrollView(
           child: Center(
             child: Column(children: [
-              const SizedBox(height: 30,),
+              //const SizedBox(height: 30,),
               Pixie(),
 
-              const SizedBox(height: 50,),
+              const SizedBox(height: 40,),
               TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",),
               TextFields(controller: passwordController, editValueOnChange: editValueOnChange, str: "Password",),
               TextFields(controller: confpasswordController, editValueOnChange: editValueOnChange, str: "Confirm Password",),
+              const SizedBox(height: 28,),
 
-              Container(
-                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(onPressed: (){}, child: const Text("Forgot Password?")),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40,),
+              AuthButton(text: "Sign-up", action: signup),
+
+              const SizedBox(height: 28,),
 
               Row(
                 children: [
@@ -54,8 +53,18 @@ class Register extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 30,),]),
-            )
+              const SizedBox(height: 30,),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ImageButton(imageURL: "assets/google.png", onPressed: doNothing),
+                  ImageButton(imageURL: "assets/apple-64.png", onPressed: doNothing),
+                ],
+              )
+            ]
+          )
+        )
       ),
     );
   }

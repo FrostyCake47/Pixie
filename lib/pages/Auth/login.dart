@@ -35,16 +35,15 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(),
         body: SingleChildScrollView(
           child: Center(
             child: Column(children: [
-              const SizedBox(height: 30,),
+              const SizedBox(height: 0,),
               Pixie(),
 
-              const SizedBox(height: 50,),
+              const SizedBox(height: 40,),
               TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",),
               TextFields(controller: passwordController, editValueOnChange: editValueOnChange, str: "Password",),
 
@@ -65,7 +64,7 @@ class _LoginState extends State<Login> {
                   AuthButton(text: "Login", action: login,),
                 ],
               ),
-              const SizedBox(height: 40,),
+              const SizedBox(height: 80,),
 
               Row(
                 children: [
@@ -89,7 +88,6 @@ class _LoginState extends State<Login> {
             ]),
           ),
         ),
-      ),
     );
   }
 }
