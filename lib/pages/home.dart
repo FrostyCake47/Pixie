@@ -75,24 +75,32 @@ class _HomeState extends State<Home> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Enter Title'),
+          contentTextStyle: TextStyle(color: Colors.white),
+          backgroundColor: Colors.grey[900],
+          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          title: SizedBox(height: 0,),
+          
           content: TextField(
+            style: const TextStyle(color: Colors.white),
             onChanged: (value) {
               newTitle = value;
             },
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               hintText: 'Enter a title',
-              //fillColor: Color.fromARGB(255, 189, 189, 189),
-
+              hintStyle: TextStyle(color: Colors.grey.shade400)
             ),
           ),
+
+
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text('Cancel', style: TextStyle(color: Colors.white),),
             ),
+
+
             TextButton(
               onPressed: (){
                 print('User input: $newTitle');
@@ -110,13 +118,11 @@ class _HomeState extends State<Home> {
                 });
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.white),),
             ),
           ],
 
-        backgroundColor: Colors.grey[100],
-        //elevation: 0,
-        //shadowColor: Colors.redAccent,
+        
         );
       },
     );
@@ -132,7 +138,9 @@ class _HomeState extends State<Home> {
                 _showInputDialog(context);
               });
             },
-            child: const Icon(Icons.add),),   
+            child: const Icon(Icons.add),
+            backgroundColor: Colors.grey[200]),
+            
     );
   }
 }
