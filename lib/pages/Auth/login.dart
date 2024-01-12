@@ -23,12 +23,29 @@ class Login extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
-        body: Center(
-          child: Column(children: [
-            TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",),
-            TextFields(controller: passwordController, editValueOnChange: editValueOnChange, str: "Password",),
-            LoginButton(login: login)
-          ]),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(children: [
+              const SizedBox(height: 30,),
+              const Text("Pixie", style: TextStyle(fontFamily: "LavishlyYours", color: Colors.white, fontSize: 72),),
+              const SizedBox(height: 50,),
+              TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",),
+              TextFields(controller: passwordController, editValueOnChange: editValueOnChange, str: "Password",),
+              const SizedBox(height: 10,),
+              LoginButton(login: login),
+              const SizedBox(height: 10,),
+
+              Container(
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(onPressed: (){}, child: const Text("Click here to register")),
+                  ],
+                ),
+              )
+            ]),
+          ),
         ),
       ),
     );
@@ -44,17 +61,20 @@ class TextFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        hintText: str,
-        hintStyle: TextStyle(color: Colors.white)
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          hintText: str,
+          hintStyle: const TextStyle(color: Colors.grey)
+        ),
+        style: const TextStyle(color: Colors.white),
+        onChanged: (value){
+          editValueOnChange(value, str);
+        },
       ),
-      style: const TextStyle(color: Colors.white),
-      onChanged: (value){
-        editValueOnChange(value, str);
-      },
     );
   }
 }
