@@ -12,10 +12,17 @@ class Login extends StatelessWidget {
     print("Email and pass is : " + email + "  " + password);
   }
 
+  void register(){
+    print("go to register page");
+  }
+
   void editValueOnChange(String value, String str){
     if(str == "Email") email = value;
     else{password = value;}
   }
+
+  void doNothing(){}
+  
 
 
   @override
@@ -27,23 +34,51 @@ class Login extends StatelessWidget {
           child: Center(
             child: Column(children: [
               const SizedBox(height: 30,),
-              const Text("Pixie", style: TextStyle(fontFamily: "LavishlyYours", color: Colors.white, fontSize: 72),),
+              Pixie(),
+
               const SizedBox(height: 50,),
               TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",),
               TextFields(controller: passwordController, editValueOnChange: editValueOnChange, str: "Password",),
-              const SizedBox(height: 10,),
-              LoginButton(login: login),
-              const SizedBox(height: 10,),
 
               Container(
                 padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextButton(onPressed: (){}, child: const Text("Click here to register")),
+                    TextButton(onPressed: (){}, child: const Text("Forgot Password?")),
                   ],
                 ),
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  AuthButton(text: "Register", action: register),
+                  AuthButton(text: "Login", action: login,),
+                ],
+              ),
+              const SizedBox(height: 30,),
+
+              Row(
+                children: [
+                  Expanded(child: Divider(thickness: 3, color: Colors.grey[800],)),
+                  const Text("    Or Continue with    ", style: TextStyle(color: Colors.white),),
+                  Expanded(child: Divider(thickness: 3, color: Colors.grey[800],)),
+                ],
+              ),
+
+              const SizedBox(height: 30,),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ImageButton(imageURL: "assets/google.png", onPressed: doNothing),
+                  ImageButton(imageURL: "assets/apple-64.png", onPressed: doNothing),
+
+                ],
               )
+
+              
             ]),
           ),
         ),
@@ -52,18 +87,21 @@ class Login extends StatelessWidget {
   }
 }
 
+
+
 class TextFields extends StatelessWidget {
   final TextEditingController controller;
   final Function(String, String) editValueOnChange;
   final String str;
 
-  TextFields({super.key, required this.controller, required this.editValueOnChange, required this.str});
+  const TextFields({super.key, required this.controller, required this.editValueOnChange, required this.str});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: TextField(
+        obscureText: str == "Password" ? true : false,
         controller: controller,
         decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
@@ -79,9 +117,10 @@ class TextFields extends StatelessWidget {
   }
 }
 
-class LoginButton extends StatelessWidget {
-  final Function() login;
-  const LoginButton({super.key, required this.login});
+class AuthButton extends StatelessWidget {
+  final String text;
+  final Function() action;
+  const AuthButton({super.key, required this.text ,required this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +129,58 @@ class LoginButton extends StatelessWidget {
     
         backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 255, 23, 68))
       ),
-      onPressed: login, 
-      child: const Text("   Login   ", style: TextStyle(color: Colors.white, fontSize: 20),));
+      onPressed: action, 
+      child: Text("   $text   ", style: const TextStyle(color: Colors.white, fontSize: 20),));
+  }
+}
+
+class Pixie extends StatelessWidget {
+  final String text = "Pixie";
+  final TextStyle? style = const TextStyle(
+          fontFamily: "LavishlyYours", 
+          fontSize: 96,      
+          );
+          
+  Gradient gradient = LinearGradient(
+    colors: [
+      Colors.redAccent.shade400,
+      Colors.purple.shade600,],
+    
+    begin: const Alignment(0, -1),
+    end : const Alignment(0, 0)
+    );
+
+  Pixie({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 30, bounds.width, bounds.height),
+      ),
+      child: Text(text, 
+        style: style,),
+    );
+  }
+}
+
+class ImageButton extends StatelessWidget {
+  final String imageURL;
+  final void Function()? onPressed;
+  const ImageButton({super.key, required this.imageURL, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsetsDirectional.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5)
+      ),
+      //child: Image.asset(imageURL, height: 40, width: 40,)
+      child: IconButton(icon: Container(child: Image.asset(imageURL), height: 40, width: 40,), onPressed: onPressed)
+    );
   }
 }

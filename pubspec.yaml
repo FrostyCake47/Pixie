@@ -45,3 +45,4 @@ flutter:
         - asset: assets/fonts/LavishlyYours-Regular.ttf
   assets:
     - 'assets/'
+    - 'assets/icons/'
