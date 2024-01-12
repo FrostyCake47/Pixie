@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_glow/flutter_glow.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:diary/services/pixietext.dart';
+import 'package:diary/components/pixietext.dart';
 
 
 class PasswordPage extends StatefulWidget {
@@ -97,11 +98,10 @@ class _PasswordPageState extends State<PasswordPage> {
             Wrap(
               spacing: 15,
               children: [
-                Icon(DiamondIcon.diamonds, color: inputPass.length > 0 ? Colors.redAccent[400] :Colors.white, size: 40,),
-                Icon(DiamondIcon.diamonds, color: inputPass.length > 1 ? Colors.redAccent[400] :Colors.white,size: 40,),
-                Icon(DiamondIcon.diamonds, color: inputPass.length > 2 ? Colors.redAccent[400] :Colors.white,size: 40,),
-                Icon(DiamondIcon.diamonds, color: inputPass.length > 3 ? Colors.redAccent[400] :Colors.white,size: 40,),
-
+                GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 0 ? Colors.redAccent[400] :Colors.white, size: 40, blurRadius: inputPass.length > 0 ? 15 : 0,),
+                GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 1 ? Colors.redAccent[400] :Colors.white,size: 40, blurRadius: inputPass.length > 1 ? 15 : 0,),
+                GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 2 ? Colors.redAccent[400] :Colors.white,size: 40, blurRadius: inputPass.length > 2 ? 15 : 0,),
+                GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 3 ? Colors.redAccent[400] :Colors.white,size: 40, blurRadius: inputPass.length > 3 ? 15 : 0,),
               ],
             ),
             SizedBox(height: 40,),

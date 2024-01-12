@@ -1,3 +1,4 @@
+import 'package:diary/components/pixietext.dart';
 import 'package:flutter/material.dart';
 import 'package:diary/services/entryblock.dart';
 import 'package:hive/hive.dart';
@@ -149,16 +150,17 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
       title: Center(
         child: Row(
           children: <Widget>[
-            Icon(Icons.book, size: 25),
-            SizedBox(width: 10,),
-            Expanded(child: Text("Pixie", style: TextStyle(fontSize: 25),)),
-            Icon(Icons.search),
-            SizedBox(width: 10,),
-            CircleAvatar(radius: 15, backgroundImage: AssetImage('assets/PaperPlanes1.jpg'),
+            const Icon(Icons.book, size: 25),
+            const SizedBox(width: 10,),
+            const Expanded(child: Text("Pixie", style: TextStyle(fontSize: 25,),)),
+            //Expanded(child: Pixie(sizey: 25,)),
+            const Icon(Icons.search),
+            const SizedBox(width: 10,),
+            const CircleAvatar(radius: 15, backgroundImage: AssetImage('assets/PaperPlanes1.jpg'),
               ),
             IconButton(onPressed: (){
               Navigator.pushNamed(context, '/setting');
-            }, icon: Icon(Icons.settings), color: Colors.white,),
+            }, icon: const Icon(Icons.settings), color: Colors.white,),
           ],
         ),
       ),

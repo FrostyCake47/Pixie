@@ -3,9 +3,10 @@ import 'package:diary/pages/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:diary/pages/home.dart';
 import 'package:diary/pages/loading.dart';
-import 'package:diary/pages/entry.dart';
-import 'package:diary/pages/entryedit.dart';
+import 'package:diary/pages/entry/entry.dart';
+import 'package:diary/pages/entry/entryedit.dart';
 import 'package:diary/pages/Auth/password.dart';
+import 'package:diary/pages/Auth/register.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -45,6 +46,7 @@ Future<void> main() async{
         "/pass" : (context) => const PasswordPage(),
         "/setting" : (context) => const Setting(),
         "/login" : (context) => Login(),
+        "/register" : (context) => Register(),
       },
 
       debugShowCheckedModeBanner: false,

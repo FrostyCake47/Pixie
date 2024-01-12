@@ -1,30 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:diary/pages/Auth/login.dart';
 import 'package:diary/components/pixietext.dart';
-import 'package:flutter_glow/flutter_glow.dart';
 import 'package:diary/components/Auth/loginregister.dart';
 
-class Login extends StatefulWidget {
 
-  Login({super.key});
-
-  @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
+class Register extends StatelessWidget {
   String email = "";
   String password = "";
+  String confpassword = "";
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  void login(){
-    print("Email and pass is : " + email + "  " + password);
-  }
-
-  void register(){
-    print("go to register page");
-    Navigator.pushNamed(context, "/register");
-  }
+  TextEditingController confpasswordController = TextEditingController();
+  Register({super.key});
 
   void editValueOnChange(String value, String str){
     if(str == "Email") email = value;
@@ -35,10 +22,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
           child: Center(
             child: Column(children: [
               const SizedBox(height: 30,),
@@ -47,6 +33,7 @@ class _LoginState extends State<Login> {
               const SizedBox(height: 50,),
               TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",),
               TextFields(controller: passwordController, editValueOnChange: editValueOnChange, str: "Password",),
+              TextFields(controller: confpasswordController, editValueOnChange: editValueOnChange, str: "Confirm Password",),
 
               Container(
                 padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
@@ -56,14 +43,6 @@ class _LoginState extends State<Login> {
                     TextButton(onPressed: (){}, child: const Text("Forgot Password?")),
                   ],
                 ),
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  AuthButton(text: "Register", action: register),
-                  AuthButton(text: "Login", action: login,),
-                ],
               ),
               const SizedBox(height: 40,),
 
@@ -75,24 +54,9 @@ class _LoginState extends State<Login> {
                 ],
               ),
 
-              const SizedBox(height: 30,),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ImageButton(imageURL: "assets/google.png", onPressed: doNothing),
-                  ImageButton(imageURL: "assets/apple-64.png", onPressed: doNothing),
-                ],
-              )
-
-              
-            ]),
-          ),
-        ),
+              const SizedBox(height: 30,),]),
+            )
       ),
     );
   }
 }
-
-
-
