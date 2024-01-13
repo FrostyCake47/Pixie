@@ -11,11 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  /*List entryBlocks = [
-    EntryBlock(title: "mwaa", subtitle: "lmao what?", id: 1,),
-    EntryBlock(title: "idk lmao", subtitle: "what else to write here?", id: 2,),];
-  */
-
   late Box<EntryBlockDetails> _entryDetails;
   late List<EntryBlockDetails> entryBlocks;
 

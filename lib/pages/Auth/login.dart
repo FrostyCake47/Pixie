@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:diary/components/pixietext.dart';
 import 'package:flutter_glow/flutter_glow.dart';
@@ -16,9 +17,22 @@ class _LoginState extends State<Login> {
   String password = "";
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  //testuser@gmail.com   testpass
 
-  void login(){
+  void login() async {
     print("Email and pass is : " + email + "  " + password);
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
   }
 
   void register(){

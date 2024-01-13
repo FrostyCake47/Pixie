@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
@@ -18,16 +19,22 @@ class _SettingState extends State<Setting> {
     settingTileList = [
     SettingTile(title: "Login/Register", icon: Icons.perm_identity_rounded, desc: "Login to your account", iconColor: Colors.blue[700], ontap: goToLogin,),
     SettingTile(title: "Change password", icon: Icons.password, desc: "Reset your current password", iconColor: Colors.grey[600], ontap: doNothing,),
+    SettingTile(title: "Logout", icon: Icons.logout_outlined, desc: "Logout from the current account", iconColor: Colors.grey[600], ontap: logout),
     SettingTile(title: "About me", icon: Icons.favorite, desc: "Mwaaa my first app", iconColor: Colors.redAccent[400], ontap: doNothing,),
     ];
   }
 
   void goToLogin(){
-    Navigator.pushNamed(context, "/login");
+    Navigator.pushNamed(context, "/auth");
   }
 
   void doNothing(){}
   
+  void logout() {
+    print("logout function");
+    if(FirebaseAuth.instance.currentUser != null) FirebaseAuth.instance.signOut();
+    else print("user already logged out");
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
+import 'package:diary/pages/auth/auth.dart';
+import 'package:flutter/material.dart';
 import 'package:diary/pages/Auth/login.dart';
 import 'package:diary/pages/setting.dart';
-import 'package:flutter/material.dart';
 import 'package:diary/pages/home.dart';
 import 'package:diary/pages/loading.dart';
 import 'package:diary/pages/entry/entry.dart';
@@ -47,6 +48,7 @@ Future<void> main() async{
         "/setting" : (context) => const Setting(),
         "/login" : (context) => Login(),
         "/register" : (context) => Register(),
+        "/auth" : (context) => AuthPage(),
       },
 
       debugShowCheckedModeBanner: false,
