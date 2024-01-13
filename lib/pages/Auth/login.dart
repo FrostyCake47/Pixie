@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:diary/components/pixietext.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:diary/components/Auth/loginregister.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Login extends StatefulWidget {
 
@@ -22,10 +23,22 @@ class _LoginState extends State<Login> {
   void login() async {
     print("Email and pass is : " + email + "  " + password);
     try {
+      showDialog(context: context, builder: (context){
+        return const Center(
+            child: SpinKitCircle(
+              color: Colors.redAccent,
+              size: 50.0,
+            ),
+          );
+      });
+
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      
+      Navigator.pop(context);
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

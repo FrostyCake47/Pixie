@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 class Setting extends StatefulWidget {
@@ -30,9 +31,24 @@ class _SettingState extends State<Setting> {
 
   void doNothing(){}
   
-  void logout() {
+  void logout() async {
     print("logout function");
-    if(FirebaseAuth.instance.currentUser != null) FirebaseAuth.instance.signOut();
+    
+
+    if(FirebaseAuth.instance.currentUser != null){
+      showDialog(context: context, builder: (context){
+        return const Center(
+            child: SpinKitCircle(
+              color: Colors.redAccent,
+              size: 50.0,
+            ),
+          );
+      });
+
+      await FirebaseAuth.instance.signOut();
+      Navigator.pop(context);
+      
+    }
     else print("user already logged out");
   }
 
