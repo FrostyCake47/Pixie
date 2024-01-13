@@ -1,3 +1,4 @@
+import 'package:diary/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:diary/components/pixietext.dart';
@@ -31,11 +32,21 @@ class _LoginState extends State<Login> {
             ),
           );
       });
-
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      
+      try{
+        final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      }
+      on FirebaseAuthException catch(e){
+        if(e.code == "user-not-found"){
+          print("user not found");
+        }
+        else if(e.code == "wrong-password"){
+          print("email or password is wrong");
+        }
+      }
       
       Navigator.pop(context);
 
@@ -106,7 +117,7 @@ class _LoginState extends State<Login> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ImageButton(imageURL: "assets/google.png", onPressed: doNothing),
+                  ImageButton(imageURL: "assets/google.png", onPressed: () => AuthService().signInWithGoogle()),
                   ImageButton(imageURL: "assets/apple-64.png", onPressed: doNothing),
                 ],
               )

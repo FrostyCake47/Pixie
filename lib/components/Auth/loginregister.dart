@@ -49,7 +49,7 @@ class AuthButton extends StatelessWidget {
 
 class ImageButton extends StatelessWidget {
   final String imageURL;
-  final void Function()? onPressed;
+  final Function()? onPressed;
   const ImageButton({super.key, required this.imageURL, required this.onPressed});
 
   @override
@@ -60,7 +60,7 @@ class ImageButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(5)
       ),
       //child: Image.asset(imageURL, height: 40, width: 40,)
-      child: IconButton(icon: Container(child: Image.asset(imageURL), height: 40, width: 40,), onPressed: onPressed)
+      child: IconButton(icon: Container(child: Image.asset(imageURL), height: 40, width: 40,), onPressed: () => onPressed)
     );
   }
 }
