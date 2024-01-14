@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 class TextFields extends StatelessWidget {
@@ -49,18 +50,22 @@ class AuthButton extends StatelessWidget {
 
 class ImageButton extends StatelessWidget {
   final String imageURL;
-  final Function()? onPressed;
+  final Function() onPressed;
   const ImageButton({super.key, required this.imageURL, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsetsDirectional.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5)
+    return GestureDetector(
+
+      onTap: onPressed,
+      child: Container(
+        padding: EdgeInsetsDirectional.symmetric(vertical: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5)
+        ),
+        child: Image.asset(imageURL, height: 40, width: 40,)
+        //child: IconButton(icon: Container(child: Image.asset(imageURL), height: 40, width: 40,), onPressed: () => onPressed)
       ),
-      //child: Image.asset(imageURL, height: 40, width: 40,)
-      child: IconButton(icon: Container(child: Image.asset(imageURL), height: 40, width: 40,), onPressed: () => onPressed)
     );
   }
 }
