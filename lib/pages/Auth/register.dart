@@ -1,7 +1,9 @@
+import 'package:diary/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:diary/pages/Auth/login.dart';
 import 'package:diary/components/pixietext.dart';
 import 'package:diary/components/Auth/loginregister.dart';
+
 
 
 class Register extends StatelessWidget {
@@ -58,7 +60,7 @@ class Register extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ImageButton(imageURL: "assets/google.png", onPressed: doNothing),
+                  ImageButton(imageURL: "assets/google.png", onPressed: () => AuthService().signInWithGoogle()),
                   ImageButton(imageURL: "assets/apple-64.png", onPressed: doNothing),
                 ],
               )
