@@ -39,10 +39,14 @@ class _RegisterState extends State<Register> {
       try{
         FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
       }
+      on FirebaseAuthException catch (e){
+        /*setState(() {
+          error = e.code;
+        });*/
+        print(e.code);
+      }
       catch (e){
-        setState(() {
-          error = "Uh ooh";
-        });
+        print(e.toString());
       }
     }
 
@@ -54,28 +58,35 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        leading: IconButton(
+          onPressed: widget.togglePage,
+          icon: const Icon(Icons.arrow_back_rounded),
+              color: Colors.white,)
+      ),
       body: SingleChildScrollView(
           child: Center(
             child: Column(children: [
               //const SizedBox(height: 30,),
               Pixie(),
 
-              const SizedBox(height: 15,),
-              Text(error, style: const TextStyle(color: Colors.white),),
-              const SizedBox(height: 15,),
+              const SizedBox(height: 10,),
+              Text(error, style: const TextStyle(color: Colors.redAccent),),
+              const SizedBox(height: 10,),
               TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",),
               TextFields(controller: passwordController, editValueOnChange: editValueOnChange, str: "Password",),
               TextFields(controller: confpasswordController, editValueOnChange: editValueOnChange, str: "Confirm Password",),
               const SizedBox(height: 28,),
 
-              Row(
+              /*Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   AuthButton(text: "Login", action: widget.togglePage),
                   AuthButton(text: "Sign-up", action: signup),
                 ],
-              ),
-
+              ),*/
+              AuthButton(text: "Sign-up", action: signup),
               const SizedBox(height: 28,),
 
               Row(
@@ -93,6 +104,18 @@ class _RegisterState extends State<Register> {
                 children: [
                   ImageButton(imageURL: "assets/google.png", onPressed: () => AuthService().signInWithGoogle()),
                   ImageButton(imageURL: "assets/apple-64.png", onPressed: doNothing),
+                ],
+              ),
+
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Already have an account? ", style: TextStyle(color: Colors.white),),
+                  GestureDetector(
+                    onTap: widget.togglePage,
+                    child: Text("Login", style: const TextStyle(color: Colors.blue),),
+                  ),
                 ],
               )
             ]

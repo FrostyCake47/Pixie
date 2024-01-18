@@ -43,7 +43,7 @@ class AuthButton extends StatelessWidget {
         backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 255, 23, 68))
       ),
       onPressed: action, 
-      child: Text("   $text   ", style: const TextStyle(color: Colors.white, fontSize: 20),));
+      child: Text("      $text      ", style: const TextStyle(color: Colors.white, fontSize: 20),));
   }
 }
 

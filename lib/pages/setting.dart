@@ -1,6 +1,8 @@
+import 'package:alert/alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hive/hive.dart';
 
 
 class Setting extends StatefulWidget {
@@ -31,9 +33,15 @@ class _SettingState extends State<Setting> {
 
   void doNothing(){}
   
+  void changePass(){
+    var passlocker = Hive.box<String>('passlock');
+    passlocker.clear();
+    Alert(message: "Password has been reset, please restart app").show();
+  }
+
   void logout() async {
     print("logout function");
-    
+    Alert(message: "User logged out", shortDuration: true).show();
 
     if(FirebaseAuth.instance.currentUser != null){
       showDialog(context: context, builder: (context){
@@ -47,6 +55,7 @@ class _SettingState extends State<Setting> {
 
       await FirebaseAuth.instance.signOut();
       Navigator.pop(context);
+      
       
     }
     else print("user already logged out");

@@ -98,14 +98,15 @@ class _LoginState extends State<Login> {
                 ),
               ),
 
-              Row(
+              /*Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   AuthButton(text: "Register", action: widget.togglePage),
                   AuthButton(text: "Login", action: login,),
                 ],
-              ),
-              const SizedBox(height: 80,),
+              ),*/
+              AuthButton(text: "Login", action: login,),
+              const SizedBox(height: 50,),
 
               Row(
                 children: [
@@ -123,9 +124,19 @@ class _LoginState extends State<Login> {
                   ImageButton(imageURL: "assets/google.png", onPressed: () => AuthService().signInWithGoogle()),
                   ImageButton(imageURL: "assets/apple-64.png", onPressed: doNothing),
                 ],
-              )
+              ),
 
-              
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Dont have an account? ", style: TextStyle(color: Colors.white),),
+                  GestureDetector(
+                    onTap: widget.togglePage,
+                    child: Text("Register", style: const TextStyle(color: Colors.blue),),
+                  ),
+                ],
+              )
             ]),
           ),
         ),
