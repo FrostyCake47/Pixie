@@ -46,8 +46,8 @@ Future<void> main() async{
         "/entryedit" : (context) => const EntryEdit(),
         "/pass" : (context) => const PasswordPage(),
         "/setting" : (context) => const Setting(),
-        "/login" : (context) => Login(),
-        "/register" : (context) => Register(),
+        "/login" : (context) => Login(null),
+        "/register" : (context) => Register(null),
         "/auth" : (context) => AuthPage(),
       },
 

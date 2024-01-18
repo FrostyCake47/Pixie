@@ -1,4 +1,5 @@
 import 'package:diary/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:diary/pages/Auth/login.dart';
 import 'package:diary/components/pixietext.dart';
@@ -6,14 +7,25 @@ import 'package:diary/components/Auth/loginregister.dart';
 
 
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+  late dynamic togglePage;
+
+  Register(Function? togglePagee){
+    togglePage = togglePagee ?? (){};
+  }
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
   String email = "";
   String password = "";
   String confpassword = "";
+  String error = "";
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confpasswordController = TextEditingController();
-  Register({super.key});
 
   void editValueOnChange(String value, String str){
     if(str == "Email") email = value;
@@ -21,14 +33,26 @@ class Register extends StatelessWidget {
     else if(str == "Confirm Password"){confpassword = value;}
   }
 
-  void signup(){
-    if(password == confpassword) print("perfect homie" + password + confpassword);
+  Future<void> signup() async {
+    if(password.trim() == confpassword.trim()){
+      print("perfect homie" + password + confpassword);
+      try{
+        FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      }
+      catch (e){
+        setState(() {
+          error = "Uh ooh";
+        });
+      }
+    }
+
   }
 
   void doNothing(){}
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -37,13 +61,20 @@ class Register extends StatelessWidget {
               //const SizedBox(height: 30,),
               Pixie(),
 
-              const SizedBox(height: 40,),
+              const SizedBox(height: 15,),
+              Text(error, style: const TextStyle(color: Colors.white),),
+              const SizedBox(height: 15,),
               TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",),
               TextFields(controller: passwordController, editValueOnChange: editValueOnChange, str: "Password",),
               TextFields(controller: confpasswordController, editValueOnChange: editValueOnChange, str: "Confirm Password",),
               const SizedBox(height: 28,),
 
-              AuthButton(text: "Sign-up", action: signup),
+              Row(
+                children: [
+                  AuthButton(text: "Login", action: widget.togglePage),
+                  AuthButton(text: "Sign-up", action: signup),
+                ],
+              ),
 
               const SizedBox(height: 28,),
 

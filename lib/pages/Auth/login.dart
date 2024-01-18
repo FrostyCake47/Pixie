@@ -7,8 +7,11 @@ import 'package:diary/components/Auth/loginregister.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Login extends StatefulWidget {
+  late dynamic togglePage;
 
-  Login({super.key});
+  Login(Function? togglePagee){
+    togglePage = togglePagee ?? (){};
+  }
 
   @override
   State<Login> createState() => _LoginState();
@@ -98,7 +101,7 @@ class _LoginState extends State<Login> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  AuthButton(text: "Register", action: register),
+                  AuthButton(text: "Register", action: widget.togglePage),
                   AuthButton(text: "Login", action: login,),
                 ],
               ),

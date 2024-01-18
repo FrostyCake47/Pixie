@@ -1,4 +1,5 @@
 import 'package:diary/pages/auth/login.dart';
+import 'package:diary/pages/auth/loginorregister.dart';
 import 'package:diary/pages/home.dart';
 import 'package:diary/pages/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +20,7 @@ class AuthPage extends StatelessWidget {
             return Home();
             }
           else {
-            return Login();
+            return LoginOrRegister();
           }
         },
       ),
