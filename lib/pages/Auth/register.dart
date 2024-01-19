@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:diary/pages/Auth/login.dart';
 import 'package:diary/components/pixietext.dart';
 import 'package:diary/components/Auth/loginregister.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 
@@ -36,18 +37,26 @@ class _RegisterState extends State<Register> {
   Future<void> signup() async {
     if(password.trim() == confpassword.trim()){
       print("perfect homie" + password + confpassword);
+      showDialog(context: context, builder: (context){
+        return const Center(
+            child: SpinKitCircle(
+              color: Colors.redAccent,
+              size: 50.0,
+            ),
+          );
+      });
+
       try{
-        FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+        final credentials = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
       }
       on FirebaseAuthException catch (e){
-        /*setState(() {
-          error = e.code;
-        });*/
         print(e.code);
       }
       catch (e){
         print(e.toString());
       }
+
+      Navigator.pop(context);
     }
 
   }

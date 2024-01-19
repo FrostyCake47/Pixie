@@ -17,14 +17,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.16"
-  alert:
-    dependency: "direct main"
-    description:
-      name: alert
-      sha256: "891255b10a3946812c6fc95a8df0a39be96cacc7ac1f7d876a807b27019aaaa7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   analyzer:
     dependency: transitive
     description:

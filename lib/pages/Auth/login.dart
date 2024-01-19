@@ -72,7 +72,26 @@ class _LoginState extends State<Login> {
     else{password = value;}
   }
 
+  void signInWithGoogle(){
+    showDialog(context: context, builder: (context){
+        return const Center(
+            child: SpinKitCircle(
+              color: Colors.redAccent,
+              size: 50.0,
+            ),
+          );
+      });
+
+    AuthService().signInWithGoogle();
+
+    Navigator.pop(context);
+
+    
+  }
+
   void doNothing(){}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +140,7 @@ class _LoginState extends State<Login> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ImageButton(imageURL: "assets/google.png", onPressed: () => AuthService().signInWithGoogle()),
+                  ImageButton(imageURL: "assets/google.png", onPressed: () => signInWithGoogle()),
                   ImageButton(imageURL: "assets/apple-64.png", onPressed: doNothing),
                 ],
               ),
