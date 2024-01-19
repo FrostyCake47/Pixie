@@ -92,47 +92,41 @@ class _PasswordPageState extends State<PasswordPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(height: 40,),
-            //Icon(Icons.lock, color: Colors.redAccent[400], size: 50,),
-            Pixie(),
             const SizedBox(height: 20,),
-            Text(displaytext, style: TextStyle(color: Colors.white, fontSize: 20,),),
-            //Text(inputPass, style: TextStyle(color: Colors.white, fontSize: 20),),
-            const SizedBox(height: 20,),
-            Wrap(
-              spacing: 15,
-              children: [
-                GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 0 ? Colors.redAccent[400] :Colors.white, size: 40, blurRadius: inputPass.length > 0 ? 15 : 0,),
-                GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 1 ? Colors.redAccent[400] :Colors.white,size: 40, blurRadius: inputPass.length > 1 ? 15 : 0,),
-                GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 2 ? Colors.redAccent[400] :Colors.white,size: 40, blurRadius: inputPass.length > 2 ? 15 : 0,),
-                GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 3 ? Colors.redAccent[400] :Colors.white,size: 40, blurRadius: inputPass.length > 3 ? 15 : 0,),
-              ],
-            ),
-            SizedBox(height: 40,),
-            Dialpad(enterPass: enterPass,),
-            SizedBox(height: 5,),
 
-            /*Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Expanded(flex: 7, child: Pixie()),
+            //const SizedBox(height: 20,),
+            Expanded(flex: 2, child: Text(displaytext, style: TextStyle(color: Colors.white, fontSize: 20,),)),
+
+            //const SizedBox(height: 20,),
+            Expanded(
+              flex: 3,
+              child: Wrap(
+                spacing: 15,
                 children: [
-                  DialButtons(enterPass: enterPass, value: -1, displayicon: Icons.backspace_outlined,),
-                  DialButtons(enterPass: enterPass, value: 0, displayicon: Icons.exposure_zero,),
-                  DialButtons(enterPass: enterPass, value: -2, displayicon: Icons.check,),
+                  GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 0 ? Colors.redAccent[400] :Colors.white, size: 40, blurRadius: inputPass.length > 0 ? 15 : 0,),
+                  GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 1 ? Colors.redAccent[400] :Colors.white,size: 40, blurRadius: inputPass.length > 1 ? 15 : 0,),
+                  GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 2 ? Colors.redAccent[400] :Colors.white,size: 40, blurRadius: inputPass.length > 2 ? 15 : 0,),
+                  GlowIcon(DiamondIcon.diamonds, color: inputPass.length > 3 ? Colors.redAccent[400] :Colors.white,size: 40, blurRadius: inputPass.length > 3 ? 15 : 0,),
                 ],
               ),
-            ),*/
+            ),
+            //SizedBox(height: 40,),
+            Expanded(flex: 10, child: Dialpad(enterPass: enterPass,)),
+            //SizedBox(height: 5,),
 
-            const SizedBox(height: 20,),
-            TextButton(
-              onPressed: (){setState(() {
-                resetPassword(); 
-                password = "null"; 
-                resetText = "password has been reset\nEnter new password";
-                });
-              }, 
-              child: Text(resetText,textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),
+            //const SizedBox(height: 20,),
+            Expanded(
+              flex: 4,
+              child: TextButton(
+                onPressed: (){setState(() {
+                  resetPassword(); 
+                  password = "null"; 
+                  resetText = "password has been reset\nEnter new password";
+                  });
+                }, 
+                child: Text(resetText,textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),
+            ),
             
           ],
         ),

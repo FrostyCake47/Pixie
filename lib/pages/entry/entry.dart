@@ -78,7 +78,7 @@ class EntryAppBar extends StatelessWidget implements PreferredSizeWidget{
                     'id': data?['id']});
 
             if (result != null){
-              print("result id at entry " + result["id"].toString());
+              //print("result id at entry " + result["id"].toString());
               updateCallback();
             }
           }, 
