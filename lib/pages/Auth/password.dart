@@ -68,15 +68,19 @@ class _PasswordPageState extends State<PasswordPage> {
   }
 
   void enterPass(index){
+    print(index);
     setState(() {
-      if(index == -2) {
+      if(index == 12) {
         authenticate();
         return;
       }
       if(inputPass.length >= 4) setState(() {inputPass = "";});
-      if(index == -1 && int.tryParse(inputPass) != null && inputPass.isNotEmpty) {inputPass = inputPass.substring(0, inputPass.length -1);}
+      //if(index == 10 && int.tryParse(inputPass) != null && inputPass.isNotEmpty) {inputPass = inputPass.substring(0, inputPass.length -1);}
+      if(index == 10) {(inputPass.length <= 1) ? inputPass = "" :  inputPass = (int.parse(inputPass)%10).toString(); }
+      else if(index == 11) {inputPass += "0";}
       else{inputPass += (index).toString();}
       if(inputPass == "-1") inputPass = "";
+
     });
   }
 
@@ -107,7 +111,8 @@ class _PasswordPageState extends State<PasswordPage> {
             SizedBox(height: 40,),
             Dialpad(enterPass: enterPass,),
             SizedBox(height: 5,),
-            Container(
+
+            /*Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -117,7 +122,8 @@ class _PasswordPageState extends State<PasswordPage> {
                   DialButtons(enterPass: enterPass, value: -2, displayicon: Icons.check,),
                 ],
               ),
-            ),
+            ),*/
+
             const SizedBox(height: 20,),
             TextButton(
               onPressed: (){setState(() {
@@ -150,13 +156,14 @@ class _DialpadState extends State<Dialpad> { // Store the input numbers
   @override
   Widget build(BuildContext context) {
     return Container(
+      // ignore: prefer_const_constructors
       constraints: BoxConstraints(
-          maxHeight: 195.0, // Set your desired maximum height
+          maxHeight: 270.0,
         ),
       //color: Colors.redAccent,
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: GridView.builder(
-        itemCount: 9,
+        itemCount: 12,
         
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
@@ -176,7 +183,15 @@ class _DialpadState extends State<Dialpad> { // Store the input numbers
               onPressed: (){
                 widget.enterPass(index+1);
               }, 
-              child: Text((index + 1).toString(), style: const TextStyle(fontSize: 25,color: Colors.white),)),
+
+              child: (index < 9 ) ? Text((index + 1).toString(), style: const TextStyle(fontSize: 25,color: Colors.white),) : 
+              (index == 9 ? const Icon(Icons.backspace_outlined, color: Colors.redAccent) : (
+               index == 10 ? Text((0).toString(), style: const TextStyle(fontSize: 25,color: Colors.white),) : 
+               const Icon(Icons.check, color: Colors.redAccent)
+              )
+              )
+            )
+
           );
         }
       ),
