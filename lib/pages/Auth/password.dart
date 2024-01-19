@@ -75,11 +75,11 @@ class _PasswordPageState extends State<PasswordPage> {
         return;
       }
       if(inputPass.length >= 4) setState(() {inputPass = "";});
-      //if(index == 10 && int.tryParse(inputPass) != null && inputPass.isNotEmpty) {inputPass = inputPass.substring(0, inputPass.length -1);}
       if(index == 10) {(inputPass.length <= 1) ? inputPass = "" :  inputPass = (int.parse(inputPass)%10).toString(); }
       else if(index == 11) {inputPass += "0";}
       else{inputPass += (index).toString();}
       if(inputPass == "-1") inputPass = "";
+      //if(inputPass.length == 4){authenticate(); return;}
 
     });
   }
