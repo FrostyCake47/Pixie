@@ -1,4 +1,5 @@
 import 'package:diary/components/pixietext.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:diary/services/entryblock.dart';
 import 'package:hive/hive.dart';
@@ -13,6 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late Box<EntryBlockDetails> _entryDetails;
   late List<EntryBlockDetails> entryBlocks;
+  late User? user = null;
 
   late Box<int> _idTracker;
   late int currentID;
@@ -22,6 +24,7 @@ class _HomeState extends State<Home> {
     print("initialzing hive");
     _initializeHive();
     _initializeIdTracker();
+    user = FirebaseAuth.instance.currentUser;
   }
   
 
@@ -126,7 +129,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeAppBar(),
+      appBar: HomeAppBar(user: user,),
       body: HomeBody(entryBlocks: entryBlocks, deleteItem: deleteItem, updateChange: updateChange,),
             floatingActionButton: FloatingActionButton(onPressed: (){
               setState(() {
@@ -142,7 +145,9 @@ class _HomeState extends State<Home> {
 
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
-  const HomeAppBar({super.key});
+  final User? user;
+
+  const HomeAppBar({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +164,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
             //Expanded(child: Pixie(sizey: 25,)),
             const Icon(Icons.search),
             const SizedBox(width: 10,),
-            const CircleAvatar(radius: 15, backgroundImage: AssetImage('assets/PaperPlanes1.jpg'),
-              ),
+            CircleAvatar(
+              radius: 15,
+              backgroundImage: NetworkImage(user?.photoURL ?? "https://i.stack.imgur.com/l60Hf.png")
+            ),
             IconButton(onPressed: (){
               Navigator.pushNamed(context, '/setting');
             }, icon: const Icon(Icons.settings), color: Colors.white,),

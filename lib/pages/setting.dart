@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 
 
@@ -50,7 +51,8 @@ class _SettingState extends State<Setting> {
             ),
           );
       });
-
+      
+      await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
       Navigator.pop(context);
 
