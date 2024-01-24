@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
     else{
       currentID = _idTracker.get(0) as int;
     }
+    //_idTracker.close();
     //_idTracker.clear();
 
   }
@@ -45,7 +46,7 @@ class _HomeState extends State<Home> {
     _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
     Iterable<EntryBlockDetails> allEntries = _entryDetails.values;
     entryBlocks = allEntries.toList();
-    //_entryDetails.clear();
+    //_entryDetails.close();
     print("entryBlocks initalized");
   }
 
