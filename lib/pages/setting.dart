@@ -71,14 +71,9 @@ class _SettingState extends State<Setting> {
   }
 
   void goToBackup(){
-    /*if (FirebaseAuth.instance.currentUser != null){
-      Navigator.pushNamed(context, '/backup');
-    }
-    else {
-      print("wee");
-      MyToast().showToast("Login in to continue");
-    }*/
-    Fluttertoast.showToast(msg: 'Login in to continue');
+    FirebaseAuth.instance.currentUser == null ? 
+    Fluttertoast.showToast(msg: 'Login in to continue') : 
+    Navigator.pushNamed(context, '/backup');
   }
 
   @override
