@@ -1,8 +1,10 @@
+import 'package:diary/pages/toasts/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class Setting extends StatefulWidget {
@@ -21,7 +23,8 @@ class _SettingState extends State<Setting> {
     super.initState();
     settingTileList = [
     SettingTile(title: "Login/Register", icon: Icons.perm_identity_rounded, desc: "Login to your account", iconColor: Colors.blue[700], ontap: goToLogin,),
-    SettingTile(title: "Change password", icon: Icons.password, desc: "Reset your current password", iconColor: Colors.grey[600], ontap: doNothing,),
+    SettingTile(title: "Change password", icon: Icons.password, desc: "Reset your current password", iconColor: Colors.grey[600], ontap: changePass,),
+    SettingTile(title: "Export/Import", icon: Icons.cloud, desc: "Backup your save files or retrieve them", iconColor: Colors.blueAccent[300], ontap: goToBackup),
     SettingTile(title: "Logout", icon: Icons.logout_outlined, desc: "Logout from the current account", iconColor: Colors.grey[600], ontap: logout),
     SettingTile(title: "About me", icon: Icons.favorite, desc: "Mwaaa my first app", iconColor: Colors.redAccent[400], ontap: doNothing,),
     ];
@@ -36,11 +39,15 @@ class _SettingState extends State<Setting> {
   void changePass(){
     var passlocker = Hive.box<String>('passlock');
     passlocker.clear();
+    Fluttertoast.showToast(
+      msg: "Password has been reset. Restart app to set new password",
+      toastLength: Toast.LENGTH_LONG
+      );
+    
   }
 
   void logout() async {
     print("logout function");
-
     if(FirebaseAuth.instance.currentUser != null){
       
       showDialog(context: context, builder: (context){
@@ -55,10 +62,23 @@ class _SettingState extends State<Setting> {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
       Navigator.pop(context);
-
-      
+      Fluttertoast.showToast(msg: "Logged out");
     }
-    else print("user already logged out");
+    else {
+      print("user already logged out");
+      Fluttertoast.showToast(msg: "User already logged out");
+    }
+  }
+
+  void goToBackup(){
+    /*if (FirebaseAuth.instance.currentUser != null){
+      Navigator.pushNamed(context, '/backup');
+    }
+    else {
+      print("wee");
+      MyToast().showToast("Login in to continue");
+    }*/
+    Fluttertoast.showToast(msg: 'Login in to continue');
   }
 
   @override

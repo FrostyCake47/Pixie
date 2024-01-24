@@ -83,10 +83,7 @@ class _LoginState extends State<Login> {
       });
 
     AuthService().signInWithGoogle();
-
     Navigator.pop(context);
-
-    
   }
 
   void doNothing(){}
@@ -101,10 +98,10 @@ class _LoginState extends State<Login> {
           child: Center(
             child: Column(children: [
               const SizedBox(height: 0,),
-              Expanded(flex: 5, child: Pixie()),
+              Pixie(),
 
-              //const SizedBox(height: 40,),
-              Expanded(flex: 10, child: TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",)),
+              const SizedBox(height: 40,),
+              TextFields(controller: emailController, editValueOnChange: editValueOnChange, str: "Email",),
               TextFields(controller: passwordController, editValueOnChange: editValueOnChange, str: "Password",),
 
               Container(
@@ -118,7 +115,7 @@ class _LoginState extends State<Login> {
               ),
 
               AuthButton(text: "Login", action: login,),
-              //const SizedBox(height: 50,),
+              const SizedBox(height: 50,),
 
               Row(
                 children: [
@@ -128,7 +125,7 @@ class _LoginState extends State<Login> {
                 ],
               ),
 
-              //const SizedBox(height: 30,),
+              const SizedBox(height: 30,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -138,7 +135,7 @@ class _LoginState extends State<Login> {
                 ],
               ),
 
-              //SizedBox(height: 30),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
