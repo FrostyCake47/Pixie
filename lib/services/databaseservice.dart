@@ -19,12 +19,36 @@ class DatabaseService{
 
 
   Future<void> updateData() async {
+    user = auth.currentUser;
     await _initializeHive();
     await _initializeidTracker();
+    
+    createMap();
+    return await userscollection.doc(user!.uid).set(map);
+  }
 
+  void createMap(){
+    List entryDetailList = [];
     entryBlocks.forEach((instance) { 
-      print(instance.title);
+      entryDetailList.add(
+        {
+          'id' : instance.id,
+          'title' : instance.title,
+          'subtitle' : instance.subtitle,
+          'day' : instance.day,
+          'time' : instance.time,
+          'date' : instance.date,
+          'content' : instance.content
+        }
+      );
     });
+
+    map = {
+      'idtracker' : currentId,
+      'entryblocks' : entryDetailList,
+    };
+
+    //print(map);
   }
 
   Future<void> _initializeHive() async {

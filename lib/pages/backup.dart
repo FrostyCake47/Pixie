@@ -1,6 +1,7 @@
 import 'package:diary/services/entryblock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:diary/services/databaseservice.dart';
 
@@ -21,10 +22,6 @@ class _BackupState extends State<Backup> {
   }
 
   void export() async {
-    /*await _initializeHive();
-    entryBlocks.forEach((instance) { 
-      print(instance.title);
-    });*/
     showDialog(context: context, builder: (context){
         return const Center(
             child: SpinKitCircle(
@@ -36,13 +33,8 @@ class _BackupState extends State<Backup> {
     
     DatabaseService().updateData();
     Navigator.pop(context);
+    Fluttertoast.showToast(msg: "Your contents has been saved to the cloud");
 
-  }
-
-  Future<void> _initializeHive() async {
-    _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
-    Iterable<EntryBlockDetails> allEntries = _entryDetails.values;
-    entryBlocks = allEntries.toList();
   }
 
   @override
