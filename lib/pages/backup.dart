@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:diary/services/databaseservice.dart';
 import 'package:cool_alert/cool_alert.dart';
+import 'package:restart_app/restart_app.dart';
 
 class Backup extends StatefulWidget {
 
@@ -32,18 +33,25 @@ class _BackupState extends State<Backup> {
     
     data = await DatabaseService().readData();
     Navigator.pop(context);
-    if(data['hasError'] == true){Fluttertoast.showToast(msg: "You haven't previously backedup to cloud before");}
-    else {Fluttertoast.showToast(msg: "Your contents has been imported");}
-
-    // ignore: use_build_context_synchronously
-    CoolAlert.show(
-      context: context,
-      type: CoolAlertType.confirm,
-      title: "Import contents?",
-      text: "This will modify your current local files and replace them with cloud save",
-      onConfirmBtnTap: () => DatabaseService().overrideLocalSave(data),
-    );
     
+    
+
+    if(data['hasError'] == true){Fluttertoast.showToast(msg: "You haven't previously backedup to cloud before");}
+    else {
+      // ignore: use_build_context_synchronously
+      await CoolAlert.show(
+        context: context,
+        type: CoolAlertType.confirm,
+        title: "Import contents?",
+        text: "This will modify your current local files and replace them with cloud save",
+        onConfirmBtnTap: () async {
+          await DatabaseService().overrideLocalSave(data);
+          await Fluttertoast.showToast(msg: "Your contents has been imported");
+          Fluttertoast.showToast(msg: "Restart your app now", toastLength: Toast.LENGTH_LONG);
+        },
+      );
+    
+    }
   }
 
   void export() async {
@@ -56,7 +64,7 @@ class _BackupState extends State<Backup> {
           );
       });
     
-    DatabaseService().updateData();
+    await DatabaseService().updateData();
     Navigator.pop(context);
     Fluttertoast.showToast(msg: "Your contents has been saved to the cloud");
   }

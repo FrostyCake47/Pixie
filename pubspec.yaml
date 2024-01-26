@@ -23,6 +23,7 @@ dependencies:
   cloud_firestore: ^4.14.0
   fluttertoast: ^8.2.4
   cool_alert: ^2.0.1
+  restart_app: ^1.2.1
 
 dev_dependencies:
   flutter_test:

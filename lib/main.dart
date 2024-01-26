@@ -39,13 +39,13 @@ Future<void> main() async{
 
 
   runApp(MaterialApp(
-      initialRoute: "/pass",
+      initialRoute: "/",
       routes: {
-        "/" : (context) => const Loading(),
+        "/" : (context) => const PasswordPage(),
+        "/loading" : (context) => const Loading(),
         "/home" : (context) => const Home(),
         "/entry" : (context) => const Entry(),
-        "/entryedit" : (context) => const EntryEdit(),
-        "/pass" : (context) => const PasswordPage(),
+        "/entryedit" : (context) => const EntryEdit(), 
         "/setting" : (context) => const Setting(),
         "/login" : (context) => Login(null),
         "/register" : (context) => Register(null),

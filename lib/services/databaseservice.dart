@@ -54,16 +54,21 @@ class DatabaseService{
   }
 
   Future<void> overrideLocalSave(Map<String, dynamic> data) async {
-    EntryBlock instance;
-    //_idTracker.put(0, map['idtracker']);
-    //print('new idtracker' + map['idtracker']);
+    _entryDetails.clear();
+    _idTracker.put(0, data['idtracker']);
 
-    /*map['entryblocks'].forEach((value){
-      print(value);
-    });*/
-
-    //print(map['entryblocks']);
-
+    data['entryblocks'].forEach((instance){
+      _entryDetails.put(instance['id'],
+        EntryBlockDetails(
+        id: instance['id'],
+        title: instance['title'],
+        subtitle: instance['subtitle'],
+        day: instance['day'],
+        date: instance['date'],
+        time: instance['time'],
+        content: instance['content'],
+      ) );  
+    });
   }
 
   void createMap(){

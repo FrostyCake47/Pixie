@@ -46,8 +46,9 @@ class _HomeState extends State<Home> {
     _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
     Iterable<EntryBlockDetails> allEntries = _entryDetails.values;
     entryBlocks = allEntries.toList();
-    //_entryDetails.close();
+
     print("entryBlocks initalized");
+    print(entryBlocks.length);
   }
 
   void deleteItem(int id) {
@@ -130,7 +131,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeAppBar(user: user,),
+      appBar: HomeAppBar(user: user, updateChange: updateChange,),
       body: HomeBody(entryBlocks: entryBlocks, deleteItem: deleteItem, updateChange: updateChange,),
             floatingActionButton: FloatingActionButton(onPressed: (){
               setState(() {
@@ -145,11 +146,19 @@ class _HomeState extends State<Home> {
 }
 
 
-class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
+class HomeAppBar extends StatefulWidget implements PreferredSizeWidget{
   final User? user;
+  final void Function(bool) updateChange;
 
-  const HomeAppBar({super.key, required this.user});
+  const HomeAppBar({super.key, required this.user, required this.updateChange});
 
+  @override
+  State<HomeAppBar> createState() => _HomeAppBarState();
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+}
+
+class _HomeAppBarState extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -162,24 +171,25 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget{
             const Icon(Icons.book, size: 25),
             const SizedBox(width: 10,),
             const Expanded(child: Text("Pixie", style: TextStyle(fontSize: 25,),)),
-            //Expanded(child: Pixie(sizey: 25,)),
             const Icon(Icons.search),
             const SizedBox(width: 10,),
             CircleAvatar(
               radius: 15,
-              backgroundImage: NetworkImage(user?.photoURL ?? "https://i.stack.imgur.com/l60Hf.png")
+              backgroundImage: NetworkImage(widget.user?.photoURL ?? "https://i.stack.imgur.com/l60Hf.png")
             ),
-            IconButton(onPressed: (){
+            IconButton(onPressed: () {
               Navigator.pushNamed(context, '/setting');
+              /*dynamic result = await Navigator.pushNamed(context, '/setting');
+              if(result){
+                print("update changed");
+                widget.updateChange(true);
+              }*/
             }, icon: const Icon(Icons.settings), color: Colors.white,),
           ],
         ),
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class HomeBody extends StatefulWidget {

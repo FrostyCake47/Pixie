@@ -80,7 +80,10 @@ class _SettingState extends State<Setting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white)
+        iconTheme: const IconThemeData(color: Colors.white),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context, true),),
       ),
       body: ListView.builder(itemCount: settingTileList.length ,itemBuilder: (context, index){
         return settingTileList[index];
