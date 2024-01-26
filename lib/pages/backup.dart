@@ -1,30 +1,48 @@
 import 'package:diary/services/entryblock.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hive/hive.dart';
+import 'package:diary/services/databaseservice.dart';
 
-class Backup extends StatelessWidget {
-  late Box<EntryBlockDetails> _entryDetails;
-  late List entryBlocks;
+class Backup extends StatefulWidget {
+
   Backup({super.key});
 
-  
+  @override
+  State<Backup> createState() => _BackupState();
+}
+
+class _BackupState extends State<Backup> {
+  late Box<EntryBlockDetails> _entryDetails;
+
+  late List entryBlocks;
 
   void import() async {
   }
 
   void export() async {
-    await _initializeHive();
+    /*await _initializeHive();
     entryBlocks.forEach((instance) { 
       print(instance.title);
-    });
-    //_entryDetails.close();
+    });*/
+    showDialog(context: context, builder: (context){
+        return const Center(
+            child: SpinKitCircle(
+              color: Colors.redAccent,
+              size: 50.0,
+            ),
+          );
+      });
+    
+    DatabaseService().updateData();
+    Navigator.pop(context);
+
   }
 
   Future<void> _initializeHive() async {
     _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
     Iterable<EntryBlockDetails> allEntries = _entryDetails.values;
     entryBlocks = allEntries.toList();
-   // _entryDetails.close();
   }
 
   @override
