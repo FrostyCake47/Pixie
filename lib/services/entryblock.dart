@@ -15,7 +15,7 @@ class EntryBlockDetails{
   late String title;
 
   @HiveField(2)
-  late final String subtitle;
+  late String subtitle;
 
   @HiveField(3)
   late String date;
@@ -84,7 +84,7 @@ class EntryBlock extends StatelessWidget {
             icon: Icons.delete_forever,)]),
 
         child: ListTile(
-          title: Text(instance?.title ?? "title"),
+          title: Padding(child: Text(instance?.title ?? "title"), padding: EdgeInsets.fromLTRB(0, 0, 0, 10),),
           subtitle: Text(instance?.subtitle ?? "subtitle"),
           trailing: Column(
             children: [
@@ -106,7 +106,7 @@ class EntryBlock extends StatelessWidget {
             });
 
             print("result of entryback" + result['hasChanged'].toString());
-            updateChange(result['hasChanged']);
+            updateChange(true);
           },
           
           titleTextStyle: const TextStyle(

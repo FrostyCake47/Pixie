@@ -43,11 +43,9 @@ class _EntryEditState extends State<EntryEdit> {
           children: [
             IconButton(
               onPressed: () async {
-                // Call the saveEdit function with the new title
+                instance.subtitle = instance.content.length > 80 ? instance.content.substring(0, 80) : instance.content;
                 _entryDetails.put(instance.id, instance);
                 print("popping back after editing 48 entryedit " + instance.title);
-                //Navigator.of(context).pop();
-
                 Navigator.pop(context, {'id':instance.id});
               },
               icon: const Icon(Icons.check),

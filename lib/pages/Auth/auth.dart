@@ -4,6 +4,7 @@ import 'package:diary/pages/home.dart';
 import 'package:diary/pages/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class AuthPage extends StatelessWidget {
@@ -17,6 +18,7 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot){
           if(snapshot.hasData) {
             print("I habe data");
+            Fluttertoast.showToast(msg: "Logged in");
             return Home();
             }
           else {
