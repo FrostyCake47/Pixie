@@ -5,11 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 
 class DatabaseService{
-  //final String uid;
   final CollectionReference userscollection = FirebaseFirestore.instance.collection('users');
   final FirebaseAuth auth = FirebaseAuth.instance;
   late User? user;
-  late Map<String, dynamic> map;
+  late Map<String, dynamic> map = {};
 
   late Box<EntryBlockDetails> _entryDetails;
   late List<EntryBlockDetails> entryBlocks;
@@ -18,13 +17,53 @@ class DatabaseService{
   late int currentId;
 
 
-  Future<void> updateData() async {
+  DatabaseService(){
+    _initializeHive();
+    _initializeidTracker();
     user = auth.currentUser;
-    await _initializeHive();
-    await _initializeidTracker();
-    
+  }
+
+  Future<void> updateData() async {
     createMap();
     return await userscollection.doc(user!.uid).set(map);
+  }
+
+  Future<Map<String, dynamic>> readData() async {
+    map['hasError'] = false;
+    try {
+      await FirebaseFirestore.instance
+      .collection('users')
+      .doc(user!.uid)
+      .get()
+      .then((DocumentSnapshot documentSnapshot){
+          if(documentSnapshot.data() == null) {print('aa error true'); map['hasError'] = true;}
+          else{
+            map = documentSnapshot.data() as Map<String, dynamic>;  
+            print(map['entryblocks'][0]['id']);
+            print(map['entryblocks'][0]['id'].runtimeType);
+          }
+      }
+    );
+    return map;
+
+    } catch (error) {
+      print('Error reading data: $error');
+      map['hasError'] = true;
+      return map;
+    }
+  }
+
+  Future<void> overrideLocalSave(Map<String, dynamic> data) async {
+    EntryBlock instance;
+    //_idTracker.put(0, map['idtracker']);
+    //print('new idtracker' + map['idtracker']);
+
+    /*map['entryblocks'].forEach((value){
+      print(value);
+    });*/
+
+    //print(map['entryblocks']);
+
   }
 
   void createMap(){
@@ -51,13 +90,13 @@ class DatabaseService{
     //print(map);
   }
 
-  Future<void> _initializeHive() async {
+  void _initializeHive() {
     _entryDetails = Hive.box<EntryBlockDetails>('entrydetails');
     Iterable<EntryBlockDetails> allEntries = _entryDetails.values;
     entryBlocks = allEntries.toList();
   }
 
-  Future<void> _initializeidTracker() async {
+  void _initializeidTracker() {
     _idTracker = Hive.box<int>('idtracker');
       if(_idTracker.get(0) == null){
         currentId = 0;
