@@ -142,11 +142,11 @@ class EntryEditContent extends StatelessWidget {
         onChanged: (value) {
           onContentChanged(value);
         },      
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           contentPadding: EdgeInsets.zero,
           border: InputBorder.none,
           hintText: "Dear diary..",
-          hintStyle: TextStyle(color: Colors.grey.shade400)
+          hintStyle: TextStyle(color: Colors.grey)
         ),
         maxLines: null,
         keyboardType: TextInputType.multiline,

@@ -82,14 +82,20 @@ class _WrittenContentState extends State<WrittenContent> {
 
   @override
   Widget build(BuildContext context) { 
+    //print("/"+instance.content+"/");
     return Container(
       child: SingleChildScrollView(
               child: Container(
                 child: Container(
-                  child: Text(
-                    instance.content,
-                    style: TextStyle(fontSize: 18.65, color: Colors.white),
-                  ),
+                  child: instance.content != '      ' ?
+                    Text(
+                      instance.content,
+                      style: TextStyle(fontSize: 18.65, color: Colors.white),
+                    ) : 
+                    const Text(
+                      "Dear diary...",
+                      style: TextStyle(fontSize: 18.65, color: Colors.grey),
+                    ),
                 ),
               ),
             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:diary/services/entryblock.dart';
-import 'package:diary/services/entrypageComponents.dart';
+import 'package:diary/components/entrypageComponents.dart';
 import 'package:hive/hive.dart';
 //import 'package:diary/services/database.txt';
 
