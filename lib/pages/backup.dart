@@ -55,19 +55,27 @@ class _BackupState extends State<Backup> {
   }
 
   void export() async {
-    showDialog(context: context, builder: (context){
-        return const Center(
-            child: SpinKitCircle(
-              color: Colors.redAccent,
-              size: 50.0,
-            ),
-          );
-      });
-    
-    await DatabaseService().updateData();
-    Navigator.pop(context);
-    Fluttertoast.showToast(msg: "Your contents has been saved to the cloud");
-  }
+    await CoolAlert.show(
+        context: context,
+        type: CoolAlertType.confirm,
+        
+        title: "Export contents?",
+        text: "This will upload your contents to cloud and overwrite the date there",
+        onConfirmBtnTap: () async {
+          showDialog(context: context, builder: (context){
+          return const Center(
+                child: SpinKitCircle(
+                  color: Colors.redAccent,
+                  size: 50.0,
+                ),
+              );
+          });
+          await DatabaseService().updateData();
+          Navigator.pop(context);
+          Fluttertoast.showToast(msg: "Your contents has saved to clouds");
+        },
+      );
+    }
 
   @override
   Widget build(BuildContext context) {
