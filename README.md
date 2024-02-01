@@ -1,3 +1,5 @@
+![Screenshot](assets/pixieWide.png)
+
 # Pixie - 
 
 Personal diary app made using Flutter. <br>
