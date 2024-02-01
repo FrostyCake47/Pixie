@@ -1,4 +1,4 @@
-# diary
+# Pixie - 
 
-My first Flutter project. 
-Hive used for database
+Personal diary app made using Flutter. 
+Authentication and database throught FireBase. Hive used for local database
