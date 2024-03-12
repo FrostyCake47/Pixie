@@ -1,6 +1,6 @@
 ![Screenshot](assets/pixieWide.png)
 
-# Pixie - 
+# Pixie
 
 Personal diary app made using Flutter. <br>
 Authentication and database throught FireBase. Hive used for local database <br>
