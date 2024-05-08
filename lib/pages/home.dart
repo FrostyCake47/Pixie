@@ -216,14 +216,29 @@ class _HomeBodyState extends State<HomeBody> {
           )
         ),
         padding: const EdgeInsets.symmetric(horizontal: 2),
-        child: ListView.builder(
+        child: (widget.entryBlocks.isNotEmpty ? 
+        ListView.builder(
           itemCount: widget.entryBlocks.length,
           itemBuilder: (context, index){
             print("currently in itembuilder");
             return EntryBlock(parentContext: context, instance: widget.entryBlocks[index], deleteItemCallback: widget.deleteItem, updateChange: widget.updateChange,);  
           },
           padding: const EdgeInsets.symmetric(horizontal: 10),  
-        ),
+        ) : 
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Pixie(),
+                const Text("Start out by writing a new memory",
+                    style: TextStyle(color: Colors.white, fontSize: 20),  
+                ),
+                const SizedBox(height: 100,)
+              ],
+            )
+          )
+        )
       );
     }
     catch (e) {
