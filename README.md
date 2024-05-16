@@ -1,4 +1,4 @@
-![Screenshot](assets/pixieWide.png)
+![Screenshot](assets/PixieNew.png)
 
 # Pixie
 
