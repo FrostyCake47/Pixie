@@ -3,9 +3,19 @@
 # Pixie
 
 Personal diary app made using Flutter. <br>
-Authentication and database throught FireBase. Hive used for local database <br>
-You could save easily move your entries from one device to another <br>
-Check out the web-version here [Pixie-web](https://github.com/FrostyCake47/pixie-web/)
+Pixie is a feature-rich personal diary app designed to keep your thoughts and memories safe and accessible. Built with Flutter for a seamless and responsive user experience across different platforms.
+
+## Key Features:
+* #### Secure Authentication:
+  Powered by Firebase, Pixie ensures that your diary entries are secure and only accessible by you.
+* #### Cloud Sync:
+  Store your entries in the cloud with Firebase, allowing you to access your diary from any device effortlessly.
+* #### Local Storage:
+  For offline access, Pixie uses Hive, a lightweight and fast local database solution.
+* #### Cross-Device Sync:
+  Easily move your entries between devices, ensuring you never lose your precious memories.
+* #### Web Version:
+  Experience Pixie on the web with the same functionality and ease of use as the mobile app. Check it out here [Pixie-web](https://github.com/FrostyCake47/pixie-web/)
 <br><br>
 
 ## ChangeLogs<br>
